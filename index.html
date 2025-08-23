@@ -14,9 +14,9 @@
   </head>
   <body>
     <section class="hero-hight">
-      <div id="hero-container" class="aurora-container">
-        <div id="hero-bg" class="aurora-bg">
-          <div id="background" class="aurora-layer"></div>
+      <div id="hero-container">
+        <div id="hero-bg">
+          <div id="animation"></div>
         </div>
         <div class="hero-content content">
           <h1>Experience Stunning Animated Backgrounds</h1>
@@ -29,9 +29,57 @@
       </div>
     </section>
     <div class="controller">
-      <button class="setting-btn">
+      <button class="setting-btn" id="openModalBtn">
         <img class="setting-icon" src="./setting.png" alt="setting icon" />
       </button>
     </div>
+
+    <!-- Modal -->
+    <div class="modal" id="settingsModal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+
+        <form class="settings-form">
+          <!-- START hero content -->
+          <!-- <p>Update Hero Content</p>
+          <input
+            type="text"
+            id="heading"
+            name="heading"
+            placeholder="Enter heading"
+            default="Experience Stunning Animated Backgrounds"
+          />
+
+          <textarea
+            id="paragraph"
+            name="paragraph"
+            placeholder="Enter paragraph"
+            default="Discover beautiful, dynamic gradient animations that bring your website to life."
+          ></textarea>
+          <input
+            type="text"
+            name="button-text"
+            default="Learn More"
+            placeholder="Enter button text"
+          />
+          <input
+            type="text"
+            name="button-link"
+            default="/get-started"
+            placeholder="Enter button link"
+          /> -->
+          <!-- END hero content -->
+          <p>Select Background Animation</p>
+          <select id="animation" name="animation">
+            <option value="aurora">Aurora</option>
+            <option value="none">none</option>
+          </select>
+          <p>Background Controller</p>
+          <div id="background-controller"></div>
+          <button type="submit" class="save-btn">Save</button>
+        </form>
+      </div>
+    </div>
   </body>
+  <script src="script.js"></script>
 </html>
