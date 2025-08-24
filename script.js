@@ -61,7 +61,7 @@ form.addEventListener("submit", (e) => {
     animation.style.setProperty("--aurora-color5", color5);
     animation.style.setProperty("--aurora-angle", angle + "deg");
   } else if (data.animation === "beam") {
-    removeAnimation();
+    // removeAnimation();
     // get dynamic values (with defaults if empty)
     const count = parseInt(data["beamCount"]) || 6;
     const gap = parseInt(data["beamGap"]) || 500;
