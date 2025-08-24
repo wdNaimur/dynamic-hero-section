@@ -16,14 +16,7 @@
     <section class="hero-hight">
       <div id="hero-container">
         <div id="hero-bg">
-          <section id="animation" class="beam-animation">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </section>
+          <section id="animation"></section>
         </div>
         <div class="hero-content content">
           <h1>Experience Stunning Animated Backgrounds</h1>
@@ -76,13 +69,100 @@
             placeholder="Enter button link"
           /> -->
           <!-- END hero content -->
-          <p>Select Background Animation</p>
-          <select id="animation" name="animation">
-            <option value="aurora">Aurora</option>
-            <option value="none">none</option>
-          </select>
-          <p>Background Controller</p>
-          <div id="background-controller"></div>
+          <p>Select Animation:</p>
+          <div>
+            <label>
+              <input type="radio" name="animation" value="aurora" /> Aurora
+            </label>
+            <label>
+              <input type="radio" name="animation" value="beam" /> Beam
+            </label>
+            <label>
+              <input type="radio" name="animation" value="none" /> None
+            </label>
+          </div>
+
+          <!-- Animation options containers -->
+          <!-- aurora options -->
+          <div
+            id="auroraOptions"
+            class="animation-options"
+            style="display: none"
+          >
+            <p>Aurora Options:</p>
+
+            <label>Angle:</label>
+            <input
+              type="number"
+              name="auroraAngle"
+              value="100"
+              min="0"
+              max="360"
+            />
+
+            <label>Color 1:</label>
+            <input type="color" name="auroraColor1" value="#3b82f6" />
+
+            <label>Color 2:</label>
+            <input type="color" name="auroraColor2" value="#a5b4fc" />
+
+            <label>Color 3:</label>
+            <input type="color" name="auroraColor3" value="#93c5fd" />
+
+            <label>Color 4:</label>
+            <input type="color" name="auroraColor4" value="#ddd6fe" />
+
+            <label>Color 5:</label>
+            <input type="color" name="auroraColor5" value="#60a5fa" />
+          </div>
+          <!-- Beam Animation Options -->
+          <div id="beamOptions" class="animation-options" style="display: none">
+            <p><strong>Beam Options:</strong></p>
+
+            <label>
+              Number of Beams:
+              <input
+                type="number"
+                name="beamCount"
+                min="1"
+                max="20"
+                value="5"
+              />
+            </label>
+
+            <label>
+              Beam Gap (px):
+              <input
+                type="number"
+                name="beamGap"
+                min="50"
+                max="1000"
+                value="200"
+              />
+            </label>
+
+            <label>
+              Beam Width (px):
+              <input
+                type="number"
+                name="beamWidth"
+                min="1"
+                max="300"
+                value="150"
+              />
+            </label>
+
+            <label>
+              Star Color:
+              <input type="color" name="beamColorStar" />
+            </label>
+
+            <label>
+              Tail Color:
+              <input type="color" name="beamColorTail" />
+            </label>
+          </div>
+
           <button type="submit" class="save-btn">Save</button>
         </form>
       </div>
