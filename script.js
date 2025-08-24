@@ -67,6 +67,7 @@ form.addEventListener("submit", (e) => {
     const gap = parseInt(data["beamGap"]) || 500;
     const color = data["beamColorStar"] || "#ff3333ff";
     const width = parseInt(data["beamWidth"]) || 200;
+    const directionOfBeams = data["directionOfBeams"];
 
     for (let i = 0; i < count; i++) {
       const beam = document.createElement("span");
@@ -86,7 +87,7 @@ form.addEventListener("submit", (e) => {
       beam.style.setProperty("--beam-color-tail", "#fff");
 
       animation.appendChild(beam);
-      beam.style.animation = `beam-animation ${duration} linear ${delay} infinite`;
+      beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
     }
   }
 });

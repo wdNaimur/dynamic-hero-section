@@ -135,15 +135,6 @@ body {
   background-color: #45a049;
 }
 
-section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  animation: animateBg 50s linear infinite;
-}
-
 /* Modal  */
 /* Modal Overlay */
 .modal {
@@ -191,7 +182,6 @@ section {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   color: #fff;
-  font-family: Arial, sans-serif;
   max-width: 400px;
 }
 
@@ -280,7 +270,6 @@ section {
   left: 0;
   top: 0;
   animation: beam-animation 3s ease-in-out infinite;
-  transform: translateY(-50px) rotate(220deg);
 }
 
 .beam::before {
@@ -293,7 +282,7 @@ section {
   background: linear-gradient(90deg, var(--beam-color-tail, #fff), transparent);
 }
 
-@keyframes beam-animation {
+@keyframes beam-animation-left {
   0% {
     transform: rotate(220deg) translateX(0px) translateY(20px);
     opacity: 1;
@@ -303,6 +292,19 @@ section {
   }
   100% {
     transform: rotate(220deg) translateX(-1000px);
+    opacity: 0;
+  }
+}
+@keyframes beam-animation-right {
+  0% {
+    transform: rotate(315deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(315deg) translateX(-1000px);
     opacity: 0;
   }
 }
