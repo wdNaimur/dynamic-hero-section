@@ -35,8 +35,25 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-  modal.style.display = "none";
+  const buttonText = data["button-text"];
+  const buttonLink = data["button-link"];
+  const heading = data["heading"];
+  const paragraph = data["paragraph"];
+  const align = data["align"];
 
+  // hero container selectors
+  const textContainer = document.querySelector(".content");
+  textContainer.style.textAlign = align;
+
+  // hero document selectors
+  const heroContent = document.querySelector(".hero-content");
+  heroContent.querySelector("h1").textContent = heading;
+  heroContent.querySelector("p").textContent = paragraph;
+  heroContent.querySelector(".hero-btn").textContent = buttonText;
+  heroContent.querySelector(".hero-btn").href = buttonLink;
+
+  modal.style.display = "none";
+  console.log(data);
   if (data.animation === "none") {
     return removeAnimation();
   } else if (data.animation === "aurora") {

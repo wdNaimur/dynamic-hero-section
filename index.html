@@ -12,22 +12,26 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body id="body">
+  <body>
+    <!-- hero section -->
     <section class="hero-hight">
       <div id="hero-container">
+        <!-- hero Background -->
         <div id="hero-bg">
           <section id="animation"></section>
         </div>
+        <!-- hero content -->
         <div class="hero-content content">
           <h1>Experience Stunning Animated Backgrounds</h1>
           <p>
             Discover beautiful, dynamic gradient animations that bring your
             website to life.
           </p>
-          <button class="hero-btn">Learn More</button>
+          <a href="#" class="hero-btn">Learn More</a>
         </div>
       </div>
     </section>
+    <!-- top right side controller -->
     <div class="controller">
       <button class="setting-btn" id="openModalBtn">
         <img class="setting-icon" src="./setting.png" alt="setting icon" />
@@ -41,7 +45,7 @@
 
         <form class="settings-form">
           <!-- START hero content -->
-          <!-- <p>Update Hero Content</p>
+          <p>Update Hero Content</p>
           <input
             type="text"
             id="heading"
@@ -63,11 +67,21 @@
             placeholder="Enter button text"
           />
           <input
-            type="text"
+            type="url"
             name="button-link"
             default="/get-started"
             placeholder="Enter button link"
-          /> -->
+          />
+          <p>Heading Position:</p>
+          <label>
+            <input type="radio" name="align" value="left" checked />
+            Left
+          </label>
+          <label>
+            <input type="radio" name="align" value="center" />
+            Center
+          </label>
+
           <!-- END hero content -->
           <p>Select Animation:</p>
           <div>

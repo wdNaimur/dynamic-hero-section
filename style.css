@@ -12,10 +12,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-  background: #111; /* fallback dark background */
+  flex-direction: column;
   color: #fff;
-  /* overflow: hidden; */
 }
 
 .hero-btn {
@@ -54,15 +52,16 @@ body {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   background: radial-gradient(ellipse at bottom, #000432, #111);
   overflow: hidden;
 }
 
 .content {
   position: relative;
+  width: 80%;
+  margin: 0 auto;
   z-index: 1;
-  text-align: center;
   margin-top: -20vh;
   padding: 0 20px;
 }
@@ -154,8 +153,10 @@ body {
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  padding: 20px;
   z-index: 1000;
+  overflow-y: scroll;
 }
 
 /* Modal Box */
