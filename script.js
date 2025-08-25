@@ -35,8 +35,6 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-
-  console.log(data); // debug all form values
   modal.style.display = "none";
 
   if (data.animation === "none") {
@@ -61,7 +59,7 @@ form.addEventListener("submit", (e) => {
     animation.style.setProperty("--aurora-color5", color5);
     animation.style.setProperty("--aurora-angle", angle + "deg");
   } else if (data.animation === "beam") {
-    // removeAnimation();
+    removeAnimation();
     // get dynamic values (with defaults if empty)
     const count = parseInt(data["beamCount"]) || 6;
     const gap = parseInt(data["beamGap"]) || 500;
@@ -88,6 +86,89 @@ form.addEventListener("submit", (e) => {
 
       animation.appendChild(beam);
       beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
+    }
+  } else if (data.animation === "borderGrid") {
+    removeAnimation();
+    animation.classList.add("animationBorderGrid");
+    const gridBox = document.querySelector(".hero-hight");
+    const boxSize = gridBox.getBoundingClientRect();
+    const containerHight = boxSize.height;
+    const containerWidth = boxSize.width;
+    const rowNumber = Math.ceil(containerHight / 100);
+    const columnNumber = Math.ceil(containerWidth / 100);
+    const numberOfBoxes = rowNumber * columnNumber;
+    const AnimationContainer = document.querySelector(".animationBorderGrid"); // animation container
+
+    AnimationContainer.style.gridTemplateColumns = `repeat(${columnNumber}, 1fr)`;
+    AnimationContainer.style.gridTemplateRows = `repeat(${rowNumber}, 1fr)`;
+
+    for (let i = 0; i < numberOfBoxes; i++) {
+      const box = document.createElement("div");
+      box.classList.add("gridbox");
+      animation.appendChild(box);
+    }
+    const boxes = document.querySelectorAll(".gridbox");
+    gridBox.addEventListener("mousemove", (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
+      let hoveredIndex;
+
+      boxes.forEach((box, i) => {
+        const rect = box.getBoundingClientRect();
+        if (
+          x >= rect.left &&
+          x <= rect.right &&
+          y >= rect.top &&
+          y <= rect.bottom
+        ) {
+          hoveredIndex = i;
+        }
+      });
+
+      // reset all
+      boxes.forEach((box) => box.classList.remove("active"));
+
+      if (hoveredIndex >= 0) {
+        const currentBox = boxes[hoveredIndex];
+        currentBox.classList.add("active");
+
+        // Remove the class after 1 second
+        setTimeout(() => {
+          currentBox.classList.remove("active");
+        }, 200);
+      }
+    });
+  } else if (data.animation === "beamGrid") {
+    removeAnimation();
+    const beamGrid = document.createElement("div");
+    beamGrid.classList.add("animationGridBeam");
+    animation.appendChild(beamGrid);
+    const count = parseInt(data["beamCount"]) || 6;
+    const gap = parseInt(data["beamGap"]) || 500;
+    const color = data["beamColorStar"] || "#ff3333ff";
+    const width = parseInt(data["beamWidth"]) || 200;
+    const directionOfBeams = data["directionOfBeams"];
+
+    for (let i = 0; i < count; i++) {
+      const beam = document.createElement("span");
+      beam.classList.add("beam");
+
+      // random delay: 0–10s
+      const delay = (Math.random() * 3).toFixed(2) + "s";
+      // random duration: 3.5–7s
+      const duration = (3.5 + Math.random() * 3.5).toFixed(2) + "s";
+
+      // apply CSS vars
+      beam.style.left = `${i * gap}px`;
+      beam.style.setProperty("--delay", delay);
+      beam.style.setProperty("--duration", duration);
+      beam.style.background = color;
+      beam.style.setProperty("--beam-width", `${width}px`);
+      beam.style.setProperty("--beam-color-tail", "#fff");
+
+      animation.appendChild(beam);
+      beam.style.animation = `beam-animation-left ${duration} linear ${delay} infinite`;
     }
   }
 });
@@ -122,6 +203,8 @@ form.addEventListener("submit", (e) => {
 const radios = document.querySelectorAll('input[name="animation"]');
 const auroraOptions = document.getElementById("auroraOptions");
 const beamOptions = document.getElementById("beamOptions");
+const beamGridOptions = document.getElementById("beamGridOptions");
+const borderGridOptions = document.getElementById("borderGridOptions");
 
 radios.forEach((radio) => {
   radio.addEventListener("change", (e) => {
@@ -130,71 +213,16 @@ radios.forEach((radio) => {
     // Hide all options initially
     auroraOptions.style.display = "none";
     beamOptions.style.display = "none";
+    beamGridOptions.style.display = "none";
+    borderGridOptions.style.display = "none";
 
     // Show options based on selection
     if (value === "aurora") auroraOptions.style.display = "block";
     if (value === "beam") beamOptions.style.display = "block";
+    if (value === "beamGrid") beamGridOptions.style.display = "block";
+    if (value === "borderGrid") borderGridOptions.style.display = "block";
+    console.log(value);
   });
 });
 
 // grid box animation
-const gridBox = document.querySelector(".hero-hight");
-
-const boxSize = gridBox.getBoundingClientRect();
-console.log(boxSize);
-const containerHight = boxSize.height;
-console.log(containerHight);
-
-const containerWidth = boxSize.width;
-console.log(containerWidth);
-
-const rowNumber = Math.ceil(containerHight / 100);
-console.log(rowNumber);
-const columnNumber = Math.ceil(containerWidth / 100);
-console.log(columnNumber);
-
-const numberOfBoxes = rowNumber * columnNumber;
-console.log(numberOfBoxes, "number of boxes");
-const AnimationContainer = document.querySelector(".animationBorderGrid"); // animation container
-
-AnimationContainer.style.gridTemplateColumns = `repeat(${columnNumber}, 1fr)`;
-AnimationContainer.style.gridTemplateRows = `repeat(${rowNumber}, 1fr)`;
-
-for (let i = 0; i < numberOfBoxes; i++) {
-  const box = document.createElement("div");
-  box.classList.add("gridbox");
-  animation.appendChild(box);
-}
-const boxes = document.querySelectorAll(".gridbox");
-gridBox.addEventListener("mousemove", (e) => {
-  const x = e.clientX;
-  const y = e.clientY;
-
-  let hoveredIndex;
-
-  boxes.forEach((box, i) => {
-    const rect = box.getBoundingClientRect();
-    if (
-      x >= rect.left &&
-      x <= rect.right &&
-      y >= rect.top &&
-      y <= rect.bottom
-    ) {
-      hoveredIndex = i;
-    }
-    console.log(hoveredIndex);
-  });
-
-  // reset all
-  boxes.forEach((box) => box.classList.remove("active"));
-
-  if (hoveredIndex >= 0) {
-    const currentBox = boxes[hoveredIndex];
-    currentBox.classList.add("active");
-
-    // Remove the class after 1 second
-    setTimeout(() => {
-      currentBox.classList.remove("active");
-    }, 200);
-  }
-});
