@@ -53,7 +53,6 @@ form.addEventListener("submit", (e) => {
   heroContent.querySelector(".hero-btn").href = buttonLink;
 
   modal.style.display = "none";
-  console.log(data);
   if (data.animation === "none") {
     return removeAnimation();
   } else if (data.animation === "aurora") {
@@ -105,8 +104,10 @@ form.addEventListener("submit", (e) => {
       beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
     }
   } else if (data.animation === "borderGrid") {
-    const gridSize = parseInt(data.borderGridSize);
     const borderColor = String(data.borderColor);
+    let gridSize = parseInt(data.borderGridSize);
+    const gridMode = data.gridMode;
+    gridSize = gridMode === "3d" ? gridSize / 3.5 : gridSize;
 
     removeAnimation();
     animation.classList.add("animationBorderGrid");
@@ -121,6 +122,10 @@ form.addEventListener("submit", (e) => {
 
     AnimationContainer.style.gridTemplateColumns = `repeat(${columnNumber}, 1fr)`;
     AnimationContainer.style.gridTemplateRows = `repeat(${rowNumber}, 1fr)`;
+    gridMode === "3d"
+      ? (AnimationContainer.style.transform =
+          "perspective(4000px) translate(-60%, -60%) skewX(30deg) skewY(-30deg) scale(4.2) rotateY(45deg) rotateX(45deg)")
+      : (AnimationContainer.style.transform = "translate(-50%, -50%)");
 
     for (let i = 0; i < numberOfBoxes; i++) {
       const box = document.createElement("div");
