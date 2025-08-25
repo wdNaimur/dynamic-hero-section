@@ -16,9 +16,7 @@
     <section class="hero-hight">
       <div id="hero-container">
         <div id="hero-bg">
-          <section id="animation" class="animationBorderGrid">
-            <!-- <div class="animationGridBeam"></div> -->
-          </section>
+          <section id="animation"></section>
         </div>
         <div class="hero-content content">
           <h1>Experience Stunning Animated Backgrounds</h1>
@@ -80,6 +78,14 @@
               <input type="radio" name="animation" value="beam" /> Beam
             </label>
             <label>
+              <input type="radio" name="animation" value="borderGrid" />
+              BorderGrid
+            </label>
+            <label>
+              <input type="radio" name="animation" value="beamGrid" />
+              Beam Grid
+            </label>
+            <label>
               <input type="radio" name="animation" value="none" /> None
             </label>
           </div>
@@ -135,7 +141,77 @@
                 name="beamCount"
                 min="1"
                 max="20"
+                value="10"
+              />
+            </label>
+
+            <label>
+              Beam Gap (px):
+              <input
+                type="number"
+                name="beamGap"
+                min="50"
+                max="1000"
+                value="200"
+              />
+            </label>
+
+            <label>
+              Beam Width (px):
+              <input
+                type="number"
+                name="beamWidth"
+                min="1"
+                max="300"
+                value="150"
+              />
+            </label>
+
+            <label>
+              Star Color:
+              <input type="color" name="beamColorStar" />
+            </label>
+
+            <label>
+              Tail Color:
+              <input type="color" name="beamColorTail" />
+            </label>
+          </div>
+
+          <!-- BorderGrid Animation Options -->
+          <div
+            id="borderGridOptions"
+            class="animation-options"
+            style="display: none"
+          >
+            <p><strong>BorderGrid Options:</strong></p>
+            <label>
+              Grid Size:
+              <input
+                type="number"
+                name="borderGridSize"
+                min="1"
+                max="20"
                 value="5"
+              />
+            </label>
+          </div>
+
+          <!-- BeamGrid Animation Options -->
+          <div
+            id="beamGridOptions"
+            class="animation-options"
+            style="display: none"
+          >
+            <p><strong>BeamGrid Options:</strong></p>
+            <label>
+              Number of Beams:
+              <input
+                type="number"
+                name="beamCount"
+                min="1"
+                max="20"
+                value="10"
               />
             </label>
 
