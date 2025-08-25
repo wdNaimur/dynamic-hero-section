@@ -370,7 +370,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid transparent;
+  border: 1px solid rgba(242, 241, 201, 0.03);
   transition: border-color 0.5s ease;
 }
 
