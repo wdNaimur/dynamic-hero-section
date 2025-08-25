@@ -362,7 +362,10 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
+  /* transform: perspective(4000px) translate(-50%, -50%) skewX(30deg)
+    skewY(-30deg) scale(2.5) rotateY(45deg) rotateX(45deg); */
+  /* rotate and skew the grid */
 
   /* overflow: hidden; */
 }
