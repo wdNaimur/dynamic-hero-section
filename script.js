@@ -61,12 +61,13 @@ form.addEventListener("submit", (e) => {
     animation.style.setProperty("--aurora-color5", color5);
     animation.style.setProperty("--aurora-angle", angle + "deg");
   } else if (data.animation === "beam") {
-    removeAnimation();
+    // removeAnimation();
     // get dynamic values (with defaults if empty)
     const count = parseInt(data["beamCount"]) || 6;
     const gap = parseInt(data["beamGap"]) || 500;
     const color = data["beamColorStar"] || "#ff3333ff";
     const width = parseInt(data["beamWidth"]) || 200;
+    const directionOfBeams = data["directionOfBeams"];
 
     for (let i = 0; i < count; i++) {
       const beam = document.createElement("span");
@@ -86,7 +87,7 @@ form.addEventListener("submit", (e) => {
       beam.style.setProperty("--beam-color-tail", "#fff");
 
       animation.appendChild(beam);
-      beam.style.animation = `beam-animation ${duration} linear ${delay} infinite`;
+      beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
     }
   }
 });
@@ -134,4 +135,66 @@ radios.forEach((radio) => {
     if (value === "aurora") auroraOptions.style.display = "block";
     if (value === "beam") beamOptions.style.display = "block";
   });
+});
+
+// grid box animation
+const gridBox = document.querySelector(".hero-hight");
+
+const boxSize = gridBox.getBoundingClientRect();
+console.log(boxSize);
+const containerHight = boxSize.height;
+console.log(containerHight);
+
+const containerWidth = boxSize.width;
+console.log(containerWidth);
+
+const rowNumber = Math.ceil(containerHight / 100);
+console.log(rowNumber);
+const columnNumber = Math.ceil(containerWidth / 100);
+console.log(columnNumber);
+
+const numberOfBoxes = rowNumber * columnNumber;
+console.log(numberOfBoxes, "number of boxes");
+const AnimationContainer = document.querySelector(".animationBorderGrid"); // animation container
+
+AnimationContainer.style.gridTemplateColumns = `repeat(${columnNumber}, 1fr)`;
+AnimationContainer.style.gridTemplateRows = `repeat(${rowNumber}, 1fr)`;
+
+for (let i = 0; i < numberOfBoxes; i++) {
+  const box = document.createElement("div");
+  box.classList.add("gridbox");
+  animation.appendChild(box);
+}
+const boxes = document.querySelectorAll(".gridbox");
+gridBox.addEventListener("mousemove", (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+
+  let hoveredIndex;
+
+  boxes.forEach((box, i) => {
+    const rect = box.getBoundingClientRect();
+    if (
+      x >= rect.left &&
+      x <= rect.right &&
+      y >= rect.top &&
+      y <= rect.bottom
+    ) {
+      hoveredIndex = i;
+    }
+    console.log(hoveredIndex);
+  });
+
+  // reset all
+  boxes.forEach((box) => box.classList.remove("active"));
+
+  if (hoveredIndex >= 0) {
+    const currentBox = boxes[hoveredIndex];
+    currentBox.classList.add("active");
+
+    // Remove the class after 1 second
+    setTimeout(() => {
+      currentBox.classList.remove("active");
+    }, 200);
+  }
 });
