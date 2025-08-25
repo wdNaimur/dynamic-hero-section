@@ -7,13 +7,17 @@
 }
 body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   background: #111; /* fallback dark background */
   color: #fff;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
+
 .hero-btn {
   background-color: #fff;
   border: none;
@@ -39,8 +43,9 @@ body {
 }
 /* will do it dynamic  */
 .hero-hight {
-  height: 100vh;
+  height: 85vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 #hero-container {
@@ -50,7 +55,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at bottom, #0d1e31, #111);
+  background: radial-gradient(ellipse at bottom, #000432, #111);
+  overflow: hidden;
 }
 
 .content {
@@ -58,6 +64,7 @@ body {
   z-index: 1;
   text-align: center;
   margin-top: -20vh;
+  padding: 0 20px;
 }
 
 .content h1 {
@@ -284,14 +291,14 @@ body {
 
 @keyframes beam-animation-left {
   0% {
-    transform: rotate(220deg) translateX(0px) translateY(20px);
+    transform: rotate(225deg) translateX(0px) translateY(20px);
     opacity: 1;
   }
   70% {
     opacity: 1;
   }
   100% {
-    transform: rotate(220deg) translateX(-1000px);
+    transform: rotate(225deg) translateX(-100vw);
     opacity: 0;
   }
 }
@@ -304,7 +311,70 @@ body {
     opacity: 1;
   }
   100% {
-    transform: rotate(315deg) translateX(-1000px);
+    transform: rotate(315deg) translateX(-100vw);
     opacity: 0;
   }
+}
+
+.animationGridBeam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: 
+    /* vignette layer */ radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0) 70%,
+      /* transparent center */ rgba(0, 0, 0, 0.6) 100% /* dark edges */
+    ),
+    /* your repeating beam grid */
+      repeating-linear-gradient(
+        45deg,
+        #030303 0%,
+        #030303 20%,
+        #242424 20%,
+        #242424 40%
+      );
+
+  background-blend-mode: multiply; /* makes vignette blend naturally */
+}
+
+/* .animationVideo {
+  position: relative;
+  width: 100%;
+  height: 100vh; 
+  overflow: hidden;
+}
+
+.animationVideo video.background-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  z-index: 999999; 
+} */
+.animationBorderGrid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* overflow: hidden; */
+}
+.gridbox {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid transparent;
+  transition: border-color 0.5s ease;
+}
+
+.gridbox.active {
+  border-color: #f2f1c9;
+  transition: border-color 0s ease;
 }
