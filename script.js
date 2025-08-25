@@ -88,14 +88,17 @@ form.addEventListener("submit", (e) => {
       beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
     }
   } else if (data.animation === "borderGrid") {
+    const gridSize = parseInt(data.borderGridSize);
+    const borderColor = String(data.borderColor);
+
     removeAnimation();
     animation.classList.add("animationBorderGrid");
     const gridBox = document.querySelector(".hero-hight");
     const boxSize = gridBox.getBoundingClientRect();
     const containerHight = boxSize.height;
     const containerWidth = boxSize.width;
-    const rowNumber = Math.ceil(containerHight / 100);
-    const columnNumber = Math.ceil(containerWidth / 100);
+    const rowNumber = Math.ceil(containerHight / gridSize);
+    const columnNumber = Math.ceil(containerWidth / gridSize);
     const numberOfBoxes = rowNumber * columnNumber;
     const AnimationContainer = document.querySelector(".animationBorderGrid"); // animation container
 
@@ -108,6 +111,7 @@ form.addEventListener("submit", (e) => {
       animation.appendChild(box);
     }
     const boxes = document.querySelectorAll(".gridbox");
+
     gridBox.addEventListener("mousemove", (e) => {
       const x = e.clientX;
       const y = e.clientY;
@@ -116,6 +120,7 @@ form.addEventListener("submit", (e) => {
 
       boxes.forEach((box, i) => {
         const rect = box.getBoundingClientRect();
+
         if (
           x >= rect.left &&
           x <= rect.right &&
@@ -132,10 +137,12 @@ form.addEventListener("submit", (e) => {
       if (hoveredIndex >= 0) {
         const currentBox = boxes[hoveredIndex];
         currentBox.classList.add("active");
+        currentBox.style.borderColor = borderColor;
 
         // Remove the class after 1 second
         setTimeout(() => {
           currentBox.classList.remove("active");
+          currentBox.style.borderColor = "";
         }, 200);
       }
     });
@@ -221,7 +228,6 @@ radios.forEach((radio) => {
     if (value === "beam") beamOptions.style.display = "block";
     if (value === "beamGrid") beamGridOptions.style.display = "block";
     if (value === "borderGrid") borderGridOptions.style.display = "block";
-    console.log(value);
   });
 });
 
