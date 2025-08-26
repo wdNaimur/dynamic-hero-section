@@ -22,13 +22,20 @@
         </div>
 
         <!-- Hero Content -->
-        <div class="hero-content content">
-          <h1>Experience Stunning Animated Backgrounds</h1>
-          <p>
-            Discover beautiful, dynamic gradient animations that bring your
-            website to life.
-          </p>
-          <a href="#" class="hero-btn">Learn More</a>
+        <div class="hero-content hero-grid">
+          <div class="text-container">
+            <h1>Experience Stunning Animated Backgrounds</h1>
+            <p>
+              Discover beautiful, dynamic gradient animations that bring your
+              website to life.
+            </p>
+            <a href="#" class="hero-btn">Learn More</a>
+          </div>
+          <!-- <img
+            class="image-container"
+            src="https://images.unsplash.com/photo-1755353426706-97e4d704f463?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="alt Tag"
+          /> -->
         </div>
       </div>
     </section>
@@ -78,6 +85,42 @@
             </div>
 
             <div>
+              <h4>Add Image:</h4>
+
+              <div
+                class="options"
+                role="radiogroup"
+                aria-label="Select image option"
+              >
+                <input
+                  type="radio"
+                  name="image"
+                  id="image-none"
+                  value="none"
+                  checked
+                />
+                <label for="image-none">None</label>
+
+                <input
+                  type="radio"
+                  id="image-background"
+                  name="image"
+                  value="background"
+                />
+                <label for="image-background">Image Background</label>
+
+                <input type="radio" id="image-grid" name="image" value="grid" />
+                <label for="image-grid">Image Grid</label>
+              </div>
+
+              <input
+                type="url"
+                name="image-url"
+                placeholder="Enter image URL"
+              />
+            </div>
+
+            <div class="text-alignment-options">
               <h4>Heading Position:</h4>
               <div
                 class="options"
