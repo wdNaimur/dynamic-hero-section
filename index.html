@@ -13,101 +13,192 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- hero section -->
+    <!-- Hero Section -->
     <section class="hero-hight">
       <div id="hero-container">
-        <!-- hero Background -->
+        <!-- Hero Background -->
         <div id="hero-bg">
           <section id="animation"></section>
         </div>
-        <!-- hero content -->
-        <div class="hero-content content">
-          <h1>Experience Stunning Animated Backgrounds</h1>
-          <p>
-            Discover beautiful, dynamic gradient animations that bring your
-            website to life.
-          </p>
-          <a href="#" class="hero-btn">Learn More</a>
+
+        <!-- Hero Content -->
+        <div class="hero-content hero-grid">
+          <div class="text-container">
+            <h1>Experience Stunning Animated Backgrounds</h1>
+            <p>
+              Discover beautiful, dynamic gradient animations that bring your
+              website to life.
+            </p>
+            <a href="#" class="hero-btn">Learn More</a>
+          </div>
+          <!-- <img
+            class="image-container"
+            src="https://images.unsplash.com/photo-1755353426706-97e4d704f463?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="alt Tag"
+          /> -->
         </div>
       </div>
     </section>
-    <!-- top right side controller -->
+
+    <!-- Top Right Side Controller -->
     <div class="controller">
       <button class="setting-btn" id="openModalBtn">
         <img class="setting-icon" src="./setting.png" alt="setting icon" />
       </button>
     </div>
 
-    <!-- Modal -->
+    <!-- Controller Settings Modal -->
     <div class="modal" id="settingsModal">
       <div class="modal-content">
         <div class="close-btn" id="closeModalBtn">&times;</div>
 
         <form class="settings-form">
-          <!-- START hero content -->
-          <p>Update Hero Content</p>
-          <input
-            type="text"
-            id="heading"
-            name="heading"
-            placeholder="Enter heading"
-            default="Experience Stunning Animated Backgrounds"
-          />
-
-          <textarea
-            id="paragraph"
-            name="paragraph"
-            placeholder="Enter paragraph"
-            default="Discover beautiful, dynamic gradient animations that bring your website to life."
-          ></textarea>
-          <input
-            type="text"
-            name="button-text"
-            default="Learn More"
-            placeholder="Enter button text"
-          />
-          <input
-            type="url"
-            name="button-link"
-            default="/get-started"
-            placeholder="Enter button link"
-          />
-          <p>Heading Position:</p>
-          <label>
-            <input type="radio" name="align" value="left" checked />
-            Left
-          </label>
-          <label>
-            <input type="radio" name="align" value="center" />
-            Center
-          </label>
-
-          <!-- END hero content -->
-          <p>Select Animation:</p>
+          <!-- Hero Content Design -->
           <div>
-            <label>
-              <input type="radio" name="animation" value="aurora" checked />
-              Aurora
-            </label>
-            <label>
-              <input type="radio" name="animation" value="beam" /> Beam
-            </label>
+            <h3>Update Hero Content</h3>
+            <div class="hero-content-input-container">
+              <input
+                type="text"
+                id="heading"
+                name="heading"
+                placeholder="Enter heading"
+              />
 
-            <label>
-              <input type="radio" name="animation" value="beamGrid" />
-              Beam Grid
-            </label>
-            <label>
-              <input type="radio" name="animation" value="borderGrid" />
-              BorderGrid
-            </label>
-            <label>
-              <input type="radio" name="animation" value="none" /> None
-            </label>
+              <input
+                type="text"
+                id="paragraph"
+                name="paragraph"
+                placeholder="Enter paragraph"
+              />
+
+              <input
+                type="text"
+                name="button-text"
+                placeholder="Enter button text"
+              />
+
+              <input
+                type="url"
+                name="button-link"
+                placeholder="Enter button link"
+              />
+            </div>
+
+            <div>
+              <h4>Add Image:</h4>
+
+              <div
+                class="options"
+                role="radiogroup"
+                aria-label="Select image option"
+              >
+                <input
+                  type="radio"
+                  name="image"
+                  id="image-none"
+                  value="none"
+                  checked
+                />
+                <label for="image-none">None</label>
+
+                <input
+                  type="radio"
+                  id="image-background"
+                  name="image"
+                  value="background"
+                />
+                <label for="image-background">Image Background</label>
+
+                <input type="radio" id="image-grid" name="image" value="grid" />
+                <label for="image-grid">Image Grid</label>
+              </div>
+
+              <input
+                type="url"
+                name="image-url"
+                placeholder="Enter image URL"
+              />
+            </div>
+
+            <div class="text-alignment-options">
+              <h4>Heading Position:</h4>
+              <div
+                class="options"
+                role="radiogroup"
+                aria-label="Select text alignment"
+              >
+                <input
+                  type="radio"
+                  id="align-left"
+                  name="align"
+                  value="left"
+                  checked
+                />
+                <label for="align-left">Left</label>
+
+                <input
+                  type="radio"
+                  id="align-center"
+                  name="align"
+                  value="center"
+                />
+                <label for="align-center">Center</label>
+              </div>
+            </div>
           </div>
 
-          <!-- Animation options containers -->
-          <!-- aurora options -->
+          <!-- Animation Selection -->
+          <div>
+            <h3>Select Animation</h3>
+            <div
+              class="options"
+              role="radiogroup"
+              aria-label="Select an animation"
+            >
+              <input
+                type="radio"
+                id="animation-aurora"
+                name="animation"
+                value="aurora"
+                checked
+              />
+              <label for="animation-aurora">Aurora</label>
+
+              <input
+                type="radio"
+                id="animation-beam"
+                name="animation"
+                value="beam"
+              />
+              <label for="animation-beam">Beam</label>
+
+              <input
+                type="radio"
+                id="animation-beamGrid"
+                name="animation"
+                value="beamGrid"
+              />
+              <label for="animation-beamGrid">Beam Grid</label>
+
+              <input
+                type="radio"
+                id="animation-borderGrid"
+                name="animation"
+                value="borderGrid"
+              />
+              <label for="animation-borderGrid">BorderGrid</label>
+
+              <input
+                type="radio"
+                id="animation-none"
+                name="animation"
+                value="none"
+              />
+              <label for="animation-none">None</label>
+            </div>
+          </div>
+
+          <!-- Aurora Options -->
           <div
             id="auroraOptions"
             class="animation-options"
@@ -123,7 +214,8 @@
               min="0"
               max="360"
             />
-            <label>Aniamtion Loop Duration:</label>
+
+            <label>Animation Loop Duration:</label>
             <input
               type="number"
               name="loopDuration"
@@ -162,7 +254,8 @@
               <span class="color-value"></span>
             </div>
           </div>
-          <!-- Beam Animation Options -->
+
+          <!-- Beam Options -->
           <div id="beamOptions" class="animation-options" style="display: none">
             <p><strong>Beam Options:</strong></p>
 
@@ -220,13 +313,14 @@
             </div>
           </div>
 
-          <!-- BorderGrid Animation Options -->
+          <!-- BorderGrid Options -->
           <div
             id="borderGridOptions"
             class="animation-options"
             style="display: none"
           >
             <p>BorderGrid Options:</p>
+
             <label>
               Mode:
               <select name="gridMode">
@@ -234,6 +328,7 @@
                 <option value="3d">3D</option>
               </select>
             </label>
+
             <label>
               Grid Size:
               <input
@@ -244,6 +339,7 @@
                 value="100"
               />
             </label>
+
             <div class="color-picker">
               <label>Border Color:</label>
               <input type="color" name="borderColor" value="#3b82f6" />
@@ -251,7 +347,7 @@
             </div>
           </div>
 
-          <!-- BeamGrid Animation Options -->
+          <!-- BeamGrid Options -->
           <div
             id="beamGridOptions"
             class="animation-options"
@@ -309,6 +405,7 @@
         </form>
       </div>
     </div>
+
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
