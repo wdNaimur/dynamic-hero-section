@@ -19,25 +19,12 @@ window.addEventListener("click", (e) => {
 });
 
 function removeAnimation() {
-  // Remove any old animation classes
   animation.classList.forEach((cls) => {
     if (cls.startsWith("animation")) {
       animation.classList.remove(cls);
     }
   });
-
-  // Clear all children inside #animation
   animation.innerHTML = "";
-
-  // Reset inline styles
-  animation.removeAttribute("style");
-
-  // Remove any gridbox event listeners (borderGrid case)
-  const gridBox = document.querySelector(".hero-hight");
-  if (gridBox) {
-    const newGridBox = gridBox.cloneNode(true); // clone without events
-    gridBox.parentNode.replaceChild(newGridBox, gridBox);
-  }
 }
 
 // GET FORM VALUE
@@ -190,7 +177,6 @@ form.addEventListener("submit", (e) => {
     const gap = parseInt(data["beamGap"]) || 500;
     const color = data["beamColorStar"] || "#ff3333ff";
     const width = parseInt(data["beamWidth"]) || 200;
-    const directionOfBeams = data["directionOfBeams"];
 
     for (let i = 0; i < count; i++) {
       const beam = document.createElement("span");
@@ -214,31 +200,6 @@ form.addEventListener("submit", (e) => {
     }
   }
 });
-
-// const backgoundSvg = (
-//   <svg viewBox="0 0 696 316">
-//     <defs>
-//       <linearGradient id="linearGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-//         <stop offset="0%" stop-color="#18CCFC" stop-opacity="0" />
-//         <stop offset="50%" stop-color="#6344F5" />
-//         <stop offset="100%" stop-color="#AE48FF" stop-opacity="0" />
-//       </linearGradient>
-//     </defs>
-
-//     <path
-//       class="beam"
-//       d="M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875"
-//     />
-//     <path
-//       class="beam"
-//       d="M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867"
-//     />
-//     <path
-//       class="beam"
-//       d="M-366 -205C-366 -205 -298 200 166 327C630 454 698 859 698 859"
-//     />
-//   </svg>
-// );
 
 // beam animaiton customization
 // backgouond controller show/hide
