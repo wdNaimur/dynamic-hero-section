@@ -19,25 +19,13 @@ window.addEventListener("click", (e) => {
 });
 
 function removeAnimation() {
-  // Remove any old animation classes
   animation.classList.forEach((cls) => {
     if (cls.startsWith("animation")) {
       animation.classList.remove(cls);
     }
   });
-
-  // Clear all children inside #animation
   animation.innerHTML = "";
-
-  // Reset inline styles
-  animation.removeAttribute("style");
-
-  // Remove any gridbox event listeners (borderGrid case)
-  const gridBox = document.querySelector(".hero-hight");
-  if (gridBox) {
-    const newGridBox = gridBox.cloneNode(true); // clone without events
-    gridBox.parentNode.replaceChild(newGridBox, gridBox);
-  }
+  animation.style = "";
 }
 
 // GET FORM VALUE
@@ -71,30 +59,36 @@ form.addEventListener("submit", (e) => {
   } else if (data.animation === "aurora") {
     removeAnimation();
     animation.classList.add("animation-aurora");
-
+    const animationAurora = document.querySelector(".animation-aurora");
     // Get user-selected options
     const color1 = data["auroraColor1"];
     const color2 = data["auroraColor2"];
     const color3 = data["auroraColor3"];
     const color4 = data["auroraColor4"];
     const color5 = data["auroraColor5"];
-    const angle = data["auroraAngle"] || 100; // fallback to 100deg if not provided
+    const angle = data["auroraAngle"] ?? 100;
+    // fallback to 100deg if not provided
+    const loopDuration = data["loopDuration"] ?? 15;
+    console.log(loopDuration);
 
     // Apply CSS variables dynamically
-    animation.style.setProperty("--aurora-color1", color1);
-    animation.style.setProperty("--aurora-color2", color2);
-    animation.style.setProperty("--aurora-color3", color3);
-    animation.style.setProperty("--aurora-color4", color4);
-    animation.style.setProperty("--aurora-color5", color5);
-    animation.style.setProperty("--aurora-angle", angle + "deg");
+    animationAurora.style.setProperty("--aurora-color1", color1);
+    animationAurora.style.setProperty("--aurora-color2", color2);
+    animationAurora.style.setProperty("--aurora-color3", color3);
+    animationAurora.style.setProperty("--aurora-color4", color4);
+    animationAurora.style.setProperty("--aurora-color5", color5);
+    animationAurora.style.setProperty("--aurora-angle", angle + "deg");
+    animationAurora.style.animationDuration = `${loopDuration}s`;
   } else if (data.animation === "beam") {
     removeAnimation();
+    console.log(data);
     // get dynamic values (with defaults if empty)
-    const count = parseInt(data["beamCount"]) || 6;
-    const gap = parseInt(data["beamGap"]) || 500;
-    const color = data["beamColorStar"] || "#ff3333ff";
+    const count = parseInt(data["beamCount"]) || 15;
+    const starColor = data["beamColorStar"];
+    const tailColor = data["beamColorTail"];
     const width = parseInt(data["beamWidth"]) || 200;
     const directionOfBeams = data["directionOfBeams"];
+    const gap = parseInt(data["beamGap"]) || 200;
 
     for (let i = 0; i < count; i++) {
       const beam = document.createElement("span");
@@ -109,20 +103,21 @@ form.addEventListener("submit", (e) => {
       beam.style.left = `${i * gap}px`;
       beam.style.setProperty("--delay", delay);
       beam.style.setProperty("--duration", duration);
-      beam.style.background = color;
       beam.style.setProperty("--beam-width", `${width}px`);
-      beam.style.setProperty("--beam-color-tail", "#fff");
+      beam.style.setProperty("--beam-color-tail", `${tailColor}`);
+      beam.style.setProperty("--beam-color-star", `${starColor}`);
+      console.log(tailColor, starColor);
 
       animation.appendChild(beam);
       beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
     }
   } else if (data.animation === "borderGrid") {
+    removeAnimation();
     const borderColor = String(data.borderColor);
     let gridSize = parseInt(data.borderGridSize);
     const gridMode = data.gridMode;
     gridSize = gridMode === "3d" ? gridSize / 3.5 : gridSize;
 
-    removeAnimation();
     animation.classList.add("animationBorderGrid");
     const gridBox = document.querySelector(".hero-hight");
     const boxSize = gridBox.getBoundingClientRect();
@@ -186,11 +181,11 @@ form.addEventListener("submit", (e) => {
     const beamGrid = document.createElement("div");
     beamGrid.classList.add("animationGridBeam");
     animation.appendChild(beamGrid);
-    const count = parseInt(data["beamCount"]) || 6;
-    const gap = parseInt(data["beamGap"]) || 500;
-    const color = data["beamColorStar"] || "#ff3333ff";
-    const width = parseInt(data["beamWidth"]) || 200;
-    const directionOfBeams = data["directionOfBeams"];
+    const count = parseInt(data["GridbeamCount"]) || 6;
+    const gap = parseInt(data["GridbeamGap"]) || 500;
+    const starColor = data["GridbeamColorStar"] || "#ff3333ff";
+    const tailColor = data["GridbeamColorTail"] || "#fff";
+    const width = parseInt(data["GridbeamWidth"]) || 200;
 
     for (let i = 0; i < count; i++) {
       const beam = document.createElement("span");
@@ -205,40 +200,15 @@ form.addEventListener("submit", (e) => {
       beam.style.left = `${i * gap}px`;
       beam.style.setProperty("--delay", delay);
       beam.style.setProperty("--duration", duration);
-      beam.style.background = color;
       beam.style.setProperty("--beam-width", `${width}px`);
-      beam.style.setProperty("--beam-color-tail", "#fff");
+      beam.style.setProperty("--beam-color-tail", `${tailColor}`);
+      beam.style.setProperty("--beam-color-star", `${starColor}`);
 
       animation.appendChild(beam);
       beam.style.animation = `beam-animation-left ${duration} linear ${delay} infinite`;
     }
   }
 });
-
-// const backgoundSvg = (
-//   <svg viewBox="0 0 696 316">
-//     <defs>
-//       <linearGradient id="linearGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-//         <stop offset="0%" stop-color="#18CCFC" stop-opacity="0" />
-//         <stop offset="50%" stop-color="#6344F5" />
-//         <stop offset="100%" stop-color="#AE48FF" stop-opacity="0" />
-//       </linearGradient>
-//     </defs>
-
-//     <path
-//       class="beam"
-//       d="M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875"
-//     />
-//     <path
-//       class="beam"
-//       d="M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867"
-//     />
-//     <path
-//       class="beam"
-//       d="M-366 -205C-366 -205 -298 200 166 327C630 454 698 859 698 859"
-//     />
-//   </svg>
-// );
 
 // beam animaiton customization
 // backgouond controller show/hide
@@ -266,4 +236,72 @@ radios.forEach((radio) => {
   });
 });
 
-// grid box animation
+//aurora color options
+const auroraColorOptions = document.getElementById("auroraOptions");
+
+// Select all color inputs inside auroraOptions
+const colorInputs = auroraColorOptions.querySelectorAll('input[type="color"]');
+
+colorInputs.forEach((input) => {
+  const span = input.nextElementSibling; // the span next to the input
+  span.textContent = input.value; // initialize with default value
+
+  // Update span dynamically on input
+  input.addEventListener("input", () => {
+    span.textContent = input.value;
+  });
+});
+
+//beam color options
+const beamColorOptions = document.getElementById("beamOptions");
+
+// Select all color inputs inside beamOptions
+const beamColorInputs = beamColorOptions.querySelectorAll(
+  'input[type="color"]'
+);
+
+beamColorInputs.forEach((input) => {
+  const span = input.nextElementSibling; // the span next to the input
+  span.textContent = input.value; // initialize with default value
+
+  // Update span dynamically on input
+  input.addEventListener("input", () => {
+    span.textContent = input.value;
+  });
+});
+
+// beam grid color show
+const beamGridColorOptions = document.getElementById("beamGridOptions");
+
+// select all color inputs in BeamGrid section
+const gridColorInputs = beamGridColorOptions.querySelectorAll(
+  'input[type="color"]'
+);
+
+gridColorInputs.forEach((input) => {
+  const span = input.nextElementSibling; // the span next to input
+  span.textContent = input.value; // initialize with default color
+
+  // update span dynamically on input
+  input.addEventListener("input", () => {
+    span.textContent = input.value;
+  });
+});
+
+// border grid color show
+const borderGridColorOptions = document.getElementById("borderGridOptions");
+
+// select all color inputs in BorderGrid section
+const borderColorInputs = borderGridColorOptions.querySelectorAll(
+  'input[type="color"]'
+);
+
+borderColorInputs.forEach((input) => {
+  const span = input.nextElementSibling; // the span next to input
+  span.textContent = input.value; // initialize with default color
+
+  // update span dynamically on input
+  input.addEventListener("input", () => {
+    span.textContent = input.value;
+  });
+});

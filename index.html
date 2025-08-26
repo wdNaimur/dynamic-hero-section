@@ -86,18 +86,20 @@
           <p>Select Animation:</p>
           <div>
             <label>
-              <input type="radio" name="animation" value="aurora" /> Aurora
+              <input type="radio" name="animation" value="aurora" checked />
+              Aurora
             </label>
             <label>
               <input type="radio" name="animation" value="beam" /> Beam
             </label>
-            <label>
-              <input type="radio" name="animation" value="borderGrid" />
-              BorderGrid
-            </label>
+
             <label>
               <input type="radio" name="animation" value="beamGrid" />
               Beam Grid
+            </label>
+            <label>
+              <input type="radio" name="animation" value="borderGrid" />
+              BorderGrid
             </label>
             <label>
               <input type="radio" name="animation" value="none" /> None
@@ -109,7 +111,7 @@
           <div
             id="auroraOptions"
             class="animation-options"
-            style="display: none"
+            style="display: block"
           >
             <p>Aurora Options:</p>
 
@@ -121,25 +123,49 @@
               min="0"
               max="360"
             />
+            <label>Aniamtion Loop Duration:</label>
+            <input
+              type="number"
+              name="loopDuration"
+              value="15"
+              min="0"
+              max="100"
+            />
 
-            <label>Color 1:</label>
-            <input type="color" name="auroraColor1" value="#3b82f6" />
+            <div class="color-picker">
+              <label>Color 1:</label>
+              <input type="color" name="auroraColor1" value="#3b82f6" />
+              <span class="color-value"></span>
+            </div>
 
-            <label>Color 2:</label>
-            <input type="color" name="auroraColor2" value="#a5b4fc" />
+            <div class="color-picker">
+              <label>Color 2:</label>
+              <input type="color" name="auroraColor2" value="#a5b4fc" />
+              <span class="color-value"></span>
+            </div>
 
-            <label>Color 3:</label>
-            <input type="color" name="auroraColor3" value="#93c5fd" />
+            <div class="color-picker">
+              <label>Color 3:</label>
+              <input type="color" name="auroraColor3" value="#93c5fd" />
+              <span class="color-value"></span>
+            </div>
 
-            <label>Color 4:</label>
-            <input type="color" name="auroraColor4" value="#ddd6fe" />
+            <div class="color-picker">
+              <label>Color 4:</label>
+              <input type="color" name="auroraColor4" value="#ddd6fe" />
+              <span class="color-value"></span>
+            </div>
 
-            <label>Color 5:</label>
-            <input type="color" name="auroraColor5" value="#60a5fa" />
+            <div class="color-picker">
+              <label>Color 5:</label>
+              <input type="color" name="auroraColor5" value="#60a5fa" />
+              <span class="color-value"></span>
+            </div>
           </div>
           <!-- Beam Animation Options -->
           <div id="beamOptions" class="animation-options" style="display: none">
             <p><strong>Beam Options:</strong></p>
+
             <label>
               Direction of Beams:
               <select name="directionOfBeams">
@@ -155,7 +181,7 @@
                 name="beamCount"
                 min="1"
                 max="20"
-                value="10"
+                value="15"
               />
             </label>
 
@@ -181,15 +207,17 @@
               />
             </label>
 
-            <label>
-              Star Color:
-              <input type="color" name="beamColorStar" />
-            </label>
+            <div class="color-picker">
+              <label>Star Color:</label>
+              <input type="color" name="beamColorStar" value="#ffffff" />
+              <span class="color-value"></span>
+            </div>
 
-            <label>
-              Tail Color:
-              <input type="color" name="beamColorTail" />
-            </label>
+            <div class="color-picker">
+              <label>Tail Color:</label>
+              <input type="color" name="beamColorTail" value="#ffffff" />
+              <span class="color-value"></span>
+            </div>
           </div>
 
           <!-- BorderGrid Animation Options -->
@@ -216,10 +244,11 @@
                 value="100"
               />
             </label>
-            <label>
-              border Color:
+            <div class="color-picker">
+              <label>Border Color:</label>
               <input type="color" name="borderColor" value="#3b82f6" />
-            </label>
+              <span class="color-value"></span>
+            </div>
           </div>
 
           <!-- BeamGrid Animation Options -->
@@ -229,11 +258,12 @@
             style="display: none"
           >
             <p><strong>BeamGrid Options:</strong></p>
+
             <label>
               Number of Beams:
               <input
                 type="number"
-                name="beamCount"
+                name="GridbeamCount"
                 min="1"
                 max="20"
                 value="10"
@@ -244,7 +274,7 @@
               Beam Gap (px):
               <input
                 type="number"
-                name="beamGap"
+                name="GridbeamGap"
                 min="50"
                 max="1000"
                 value="200"
@@ -255,22 +285,24 @@
               Beam Width (px):
               <input
                 type="number"
-                name="beamWidth"
+                name="GridbeamWidth"
                 min="1"
                 max="300"
                 value="150"
               />
             </label>
 
-            <label>
-              Star Color:
-              <input type="color" name="beamColorStar" />
-            </label>
+            <div class="color-picker">
+              <label>Star Color:</label>
+              <input type="color" name="GridbeamColorStar" value="#ffffff" />
+              <span class="color-value"></span>
+            </div>
 
-            <label>
-              Tail Color:
-              <input type="color" name="beamColorTail" />
-            </label>
+            <div class="color-picker">
+              <label>Tail Color:</label>
+              <input type="color" name="GridbeamColorTail" value="#ffffff" />
+              <span class="color-value"></span>
+            </div>
           </div>
 
           <button type="submit" class="save-btn">Save</button>
