@@ -104,29 +104,6 @@ body {
   height: 20px;
 }
 
-/* Form Elements */
-.settings-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  gap: 15px;
-}
-
-.settings-form input,
-.settings-form textarea,
-.settings-form select {
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background-color: #eeeeee;
-  font-size: 14px;
-}
-
-.settings-form textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-
 .save-btn {
   background-color: #4caf50;
   color: white;
@@ -152,9 +129,8 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: start;
-  padding: 20px;
   z-index: 1000;
   overflow-y: scroll;
 }
@@ -162,14 +138,13 @@ body {
 /* Modal Box */
 .modal-content {
   padding: 30px;
-  border-radius: 10px;
-  background: rgba(46, 46, 46, 0.1);
+  background: rgba(46, 46, 46, 0.6);
   backdrop-filter: blur(10px);
-  width: 400px;
-  max-width: 90%;
+  min-width: 50%;
+  min-height: 100vh;
   position: relative;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Close Button */
@@ -184,13 +159,13 @@ body {
 
 /* animation options style  */
 .animation-options {
-  background-color: #1a1a1a; /* dark background for contrast */
+  background-color: oklab(21.779% 0 -0.00002);
   padding: 20px;
-  margin-top: 15px;
+  margin: 15px 0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   color: #fff;
-  max-width: 400px;
+  width: 100%;
 }
 
 .animation-options p {
@@ -418,4 +393,93 @@ body {
 .color-picker input[type="color"]::-moz-color-swatch {
   border: none;
   border-radius: 50%;
+}
+
+/* modal redesign  */
+.hero-content-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+/* radio button design  */
+/* Container for radio buttons */
+.hero-content-input-container label,
+.animation-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 15px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Hide default radio input */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+/* Hover effect */
+input[type="radio"]:hover {
+  border-color: #3b82f6;
+}
+
+/* Checked state */
+input[type="radio"]:checked {
+  border-color: #3b82f6;
+  background-color: #3b82f6;
+}
+
+/* Inner dot for checked radio */
+input[type="radio"]:checked::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Form Elements */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.settings-form input,
+.settings-form textarea,
+.settings-form select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #eeeeee;
+  font-size: 14px;
 }
