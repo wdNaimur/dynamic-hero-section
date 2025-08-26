@@ -25,6 +25,7 @@ function removeAnimation() {
     }
   });
   animation.innerHTML = "";
+  animation.style = "";
 }
 
 // GET FORM VALUE
@@ -104,12 +105,12 @@ form.addEventListener("submit", (e) => {
       beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
     }
   } else if (data.animation === "borderGrid") {
+    removeAnimation();
     const borderColor = String(data.borderColor);
     let gridSize = parseInt(data.borderGridSize);
     const gridMode = data.gridMode;
     gridSize = gridMode === "3d" ? gridSize / 3.5 : gridSize;
 
-    removeAnimation();
     animation.classList.add("animationBorderGrid");
     const gridBox = document.querySelector(".hero-hight");
     const boxSize = gridBox.getBoundingClientRect();
