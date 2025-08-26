@@ -14,6 +14,7 @@ body {
   justify-content: center;
   flex-direction: column;
   color: #fff;
+  background: radial-gradient(ellipse at bottom, #000432, #111);
 }
 
 .hero-btn {
@@ -41,7 +42,7 @@ body {
 }
 /* will do it dynamic  */
 .hero-hight {
-  height: 85vh;
+  /* height: 85vh; */
   width: 100vw;
   overflow: hidden;
 }
@@ -53,11 +54,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: start;
-  background: radial-gradient(ellipse at bottom, #000432, #111);
-  overflow: hidden;
+  /* background: radial-gradient(ellipse at bottom, #000432, #111); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* overflow: hidden; */
 }
 
-.content {
+.hero-content {
   position: relative;
   width: 80%;
   margin: 0 auto;
@@ -66,7 +70,7 @@ body {
   padding: 0 20px;
 }
 
-.content h1 {
+.hero-content h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
   line-height: 3.5rem;
@@ -104,29 +108,6 @@ body {
   height: 20px;
 }
 
-/* Form Elements */
-.settings-form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  gap: 15px;
-}
-
-.settings-form input,
-.settings-form textarea,
-.settings-form select {
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background-color: #eeeeee;
-  font-size: 14px;
-}
-
-.settings-form textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-
 .save-btn {
   background-color: #4caf50;
   color: white;
@@ -152,9 +133,8 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: start;
-  padding: 20px;
   z-index: 1000;
   overflow-y: scroll;
 }
@@ -162,14 +142,13 @@ body {
 /* Modal Box */
 .modal-content {
   padding: 30px;
-  border-radius: 10px;
-  background: rgba(46, 46, 46, 0.1);
+  background: rgba(46, 46, 46, 0.6);
   backdrop-filter: blur(10px);
-  width: 400px;
-  max-width: 90%;
+  min-width: 50%;
+  min-height: 100vh;
   position: relative;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  border-left: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Close Button */
@@ -184,13 +163,13 @@ body {
 
 /* animation options style  */
 .animation-options {
-  background-color: #1a1a1a; /* dark background for contrast */
+  background-color: oklab(21.779% 0 -0.00002);
   padding: 20px;
-  margin-top: 15px;
+  margin: 15px 0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   color: #fff;
-  max-width: 400px;
+  width: 100%;
 }
 
 .animation-options p {
@@ -418,4 +397,164 @@ body {
 .color-picker input[type="color"]::-moz-color-swatch {
   border: none;
   border-radius: 50%;
+}
+
+/* modal redesign  */
+.hero-content-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+/* radio button design  */
+/* Container for radio buttons */
+.hero-content-input-container label,
+.animation-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 15px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Hide default radio input */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+/* Hover effect */
+input[type="radio"]:hover {
+  border-color: #3b82f6;
+}
+
+/* Checked state */
+input[type="radio"]:checked {
+  border-color: #3b82f6;
+  background-color: #3b82f6;
+}
+
+/* Inner dot for checked radio */
+input[type="radio"]:checked::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Form Elements */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.settings-form input,
+.settings-form textarea,
+.settings-form select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #eeeeee;
+  font-size: 14px;
+}
+
+/* hero grid style  */
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* dynamic  */
+  justify-content: space-between;
+  gap: 10px;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 40px 0;
+  /* background: linear-gradient(45deg, #3b82f6, #ef4444); */
+}
+.text-container {
+  width: 100%;
+  height: 100%;
+  padding: 300px 0;
+}
+.image-container {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+.image-container-hide {
+  display: none;
+}
+.image-container-show {
+  display: block;
+}
+.text-alignment-left {
+  text-align: left;
+}
+.text-alignment-center {
+  text-align: center;
+}
+.text-alignment-right {
+  text-align: right;
+}
+
+@media screen and (max-width: 1440px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    padding: 200px 0;
+  }
+  .text-container {
+    order: 2;
+    padding: 0;
+    margin-bottom: 10%;
+  }
+  .image-container {
+    order: 1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .text-alignment-left {
+    text-align: center;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 20px;
 }

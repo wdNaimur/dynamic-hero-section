@@ -18,7 +18,17 @@ window.addEventListener("click", (e) => {
   }
 });
 
+// function removeAnimation() {
+//   animation.classList.forEach((cls) => {
+//     if (cls.startsWith("animation")) {
+//       animation.classList.remove(cls);
+//     }
+//   });
+//   animation.innerHTML = "";
+//   animation.style = "";
+// }
 function removeAnimation() {
+  // remove animation classes
   animation.classList.forEach((cls) => {
     if (cls.startsWith("animation")) {
       animation.classList.remove(cls);
@@ -26,6 +36,38 @@ function removeAnimation() {
   });
   animation.innerHTML = "";
   animation.style = "";
+
+  // reset hero background
+  const heroContainer = document.getElementById("hero-container");
+  if (heroContainer) {
+    heroContainer.style.backgroundImage = "";
+  }
+
+  // reset hero content
+  const heroContent = document.querySelector(".hero-content");
+  if (heroContent) {
+    // remove grid class
+    heroContent.classList.remove("hero-grid");
+
+    // remove inline grid style
+    heroContent.style.gridTemplateColumns = "";
+
+    // remove dynamic image if exists
+    const img = heroContent.querySelector(".image-container");
+    if (img) {
+      img.remove();
+    }
+  }
+
+  // reset text alignment
+  const textContainer = document.querySelector(".text-container");
+  if (textContainer) {
+    textContainer.classList.remove(
+      ...Array.from(textContainer.classList).filter((cls) =>
+        cls.startsWith("text-alignment-")
+      )
+    );
+  }
 }
 
 // GET FORM VALUE
@@ -34,6 +76,7 @@ const form = document.querySelector(".settings-form");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  removeAnimation();
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
   const buttonText = data["button-text"];
@@ -41,13 +84,37 @@ form.addEventListener("submit", (e) => {
   const heading = data["heading"];
   const paragraph = data["paragraph"];
   const align = data["align"];
+  const image = data["image"];
 
+  console.log(data);
   // hero container selectors
-  const textContainer = document.querySelector(".content");
-  textContainer.style.textAlign = align;
-
+  const textContainer = document.querySelector(".text-container");
+  textContainer.classList.add(`text-alignment-${align}`);
+  if (image === "grid") {
+    removeAnimation();
+    const imageURL = data["image-url"];
+    const img = document.createElement("img");
+    img.className = "image-container";
+    img.src = imageURL;
+    img.alt = "alt Tag";
+    const heroContent = document.querySelector(".hero-content");
+    heroContent.appendChild(img);
+    heroContent.classList.add("hero-grid");
+    console.log(imageURL);
+  } else if (image === "background") {
+    removeAnimation();
+    const imageURL = data["image-url"];
+    const background = document.getElementById("hero-container");
+    background.style.backgroundImage = `url(${imageURL})`;
+    const heroGrid = document.querySelector(".hero-grid");
+    heroGrid.style.gridTemplateColumns = "1fr";
+  } else if (image === "none") {
+    removeAnimation();
+    const heroContent = document.querySelector(".hero-content");
+    heroContent.querySelector(".image-container")?.remove();
+  }
   // hero document selectors
-  const heroContent = document.querySelector(".hero-content");
+  const heroContent = document.querySelector(".text-container");
   heroContent.querySelector("h1").textContent = heading;
   heroContent.querySelector("p").textContent = paragraph;
   heroContent.querySelector(".hero-btn").textContent = buttonText;
@@ -303,5 +370,22 @@ borderColorInputs.forEach((input) => {
   // update span dynamically on input
   input.addEventListener("input", () => {
     span.textContent = input.value;
+  });
+});
+
+// Select all image option radios
+const imageRadios = document.querySelectorAll('input[name="image"]');
+const headingPositionBox = document.querySelector(".text-alignment-options");
+
+// Watch for changes
+imageRadios.forEach((radio) => {
+  radio.addEventListener("change", (e) => {
+    const value = e.target.value;
+
+    if (value === "grid") {
+      headingPositionBox.style.display = "none";
+    } else {
+      headingPositionBox.style.display = "block";
+    }
   });
 });
