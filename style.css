@@ -245,7 +245,8 @@ body {
   background-position: 50% 50%;
   filter: blur(12px) invert(1);
   opacity: 0.5;
-  animation: auroraMove 15s ease-in-out infinite alternate;
+  animation: auroraMove ease-in-out infinite alternate;
+  /* animation-duration: 15s; */
   mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
   -webkit-mask-image: radial-gradient(
     ellipse at 100% 0%,
@@ -269,12 +270,13 @@ body {
 /* glowing start */
 .beam {
   position: absolute;
-  transform: translate(-10px, -10px);
+  transform: translate(-15px, -15px);
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
-    0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 2px var(--beam-color-star),
+    /* inner core */ 0 0 6px 4px rgba(255, 255, 255, 0.4),
+    /* mid glow */ 0 0 20px 10px rgba(255, 255, 255, 0.15);
   left: 0;
   top: 0;
   animation: beam-animation 3s ease-in-out infinite;
@@ -287,7 +289,12 @@ body {
   transform: translateY(-50%);
   width: var(--beam-width, 150px);
   height: 1px;
-  background: linear-gradient(90deg, var(--beam-color-tail, #fff), transparent);
+  /* background: linear-gradient(90deg, #ff2929, transparent); */
+  background: linear-gradient(
+    90deg,
+    var(--beam-color-tail, #ff2929),
+    transparent
+  );
 }
 
 @keyframes beam-animation-left {
@@ -381,4 +388,34 @@ body {
 .gridbox.active {
   border-color: #f2f1c9;
   transition: border-color 0s ease;
+}
+
+/* color picker fix  */
+.color-picker input[type="color"] {
+  -webkit-appearance: none; /* Remove default styling */
+  border: 3px solid white;
+  border-radius: 50%; /* Make it circular */
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  cursor: pointer;
+  background-color: #ffffff;
+  vertical-align: middle;
+}
+
+/* For Chrome, Safari, Edge */
+.color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.color-picker input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* For Firefox */
+.color-picker input[type="color"]::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
 }
