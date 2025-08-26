@@ -19,12 +19,25 @@ window.addEventListener("click", (e) => {
 });
 
 function removeAnimation() {
+  // Remove any old animation classes
   animation.classList.forEach((cls) => {
     if (cls.startsWith("animation")) {
       animation.classList.remove(cls);
     }
   });
+
+  // Clear all children inside #animation
   animation.innerHTML = "";
+
+  // Reset inline styles
+  animation.removeAttribute("style");
+
+  // Remove any gridbox event listeners (borderGrid case)
+  const gridBox = document.querySelector(".hero-hight");
+  if (gridBox) {
+    const newGridBox = gridBox.cloneNode(true); // clone without events
+    gridBox.parentNode.replaceChild(newGridBox, gridBox);
+  }
 }
 
 // GET FORM VALUE
