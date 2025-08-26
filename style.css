@@ -222,7 +222,7 @@ body {
 
   background-size: 300% 200%;
   background-position: 50% 50%;
-  filter: blur(12px) invert(1);
+  filter: blur(12px);
   opacity: 0.5;
   animation: auroraMove ease-in-out infinite alternate;
   /* animation-duration: 15s; */

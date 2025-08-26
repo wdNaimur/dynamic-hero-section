@@ -18,17 +18,7 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// function removeAnimation() {
-//   animation.classList.forEach((cls) => {
-//     if (cls.startsWith("animation")) {
-//       animation.classList.remove(cls);
-//     }
-//   });
-//   animation.innerHTML = "";
-//   animation.style = "";
-// }
 function removeAnimation() {
-  // remove animation classes
   animation.classList.forEach((cls) => {
     if (cls.startsWith("animation")) {
       animation.classList.remove(cls);
@@ -36,38 +26,6 @@ function removeAnimation() {
   });
   animation.innerHTML = "";
   animation.style = "";
-
-  // reset hero background
-  const heroContainer = document.getElementById("hero-container");
-  if (heroContainer) {
-    heroContainer.style.backgroundImage = "";
-  }
-
-  // reset hero content
-  const heroContent = document.querySelector(".hero-content");
-  if (heroContent) {
-    // remove grid class
-    heroContent.classList.remove("hero-grid");
-
-    // remove inline grid style
-    heroContent.style.gridTemplateColumns = "";
-
-    // remove dynamic image if exists
-    const img = heroContent.querySelector(".image-container");
-    if (img) {
-      img.remove();
-    }
-  }
-
-  // reset text alignment
-  const textContainer = document.querySelector(".text-container");
-  if (textContainer) {
-    textContainer.classList.remove(
-      ...Array.from(textContainer.classList).filter((cls) =>
-        cls.startsWith("text-alignment-")
-      )
-    );
-  }
 }
 
 // GET FORM VALUE
@@ -91,7 +49,6 @@ form.addEventListener("submit", (e) => {
   const textContainer = document.querySelector(".text-container");
   textContainer.classList.add(`text-alignment-${align}`);
   if (image === "grid") {
-    removeAnimation();
     const imageURL = data["image-url"];
     const img = document.createElement("img");
     img.className = "image-container";
@@ -102,14 +59,12 @@ form.addEventListener("submit", (e) => {
     heroContent.classList.add("hero-grid");
     console.log(imageURL);
   } else if (image === "background") {
-    removeAnimation();
     const imageURL = data["image-url"];
     const background = document.getElementById("hero-container");
     background.style.backgroundImage = `url(${imageURL})`;
     const heroGrid = document.querySelector(".hero-grid");
     heroGrid.style.gridTemplateColumns = "1fr";
   } else if (image === "none") {
-    removeAnimation();
     const heroContent = document.querySelector(".hero-content");
     heroContent.querySelector(".image-container")?.remove();
   }
