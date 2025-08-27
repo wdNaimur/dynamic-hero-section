@@ -3,6 +3,9 @@ const modal = document.getElementById("settingsModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const animation = document.getElementById("animation");
 const backgroundController = document.getElementById("background-controller");
+const heroContent = document.querySelector(".hero-content");
+const textContainer = document.querySelector(".text-container");
+const background = document.getElementById("hero-container");
 
 openModalBtn.addEventListener("click", () => {
   modal.style.display = "flex";
@@ -27,7 +30,24 @@ function removeAnimation() {
   animation.innerHTML = "";
   animation.style = "";
 }
+// text container fix
+function resetTextContainer() {
+  // clear inline styles only if set
+  if (heroContent.hasAttribute("style")) {
+    heroContent.removeAttribute("style");
+  }
 
+  // remove any text alignment class (catch-all)
+  textContainer.classList.forEach((cls) => {
+    if (cls.startsWith("text-alignment-")) {
+      textContainer.classList.remove(cls);
+    }
+  });
+
+  // remove image if left over from grid option
+  const oldImg = heroContent.querySelector(".image-container");
+  if (oldImg) oldImg.remove();
+}
 // GET FORM VALUE
 
 const form = document.querySelector(".settings-form");
@@ -35,6 +55,7 @@ const form = document.querySelector(".settings-form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   removeAnimation();
+  resetTextContainer();
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
   const buttonText = data["button-text"];
@@ -46,34 +67,49 @@ form.addEventListener("submit", (e) => {
 
   console.log(data);
   // hero container selectors
-  const textContainer = document.querySelector(".text-container");
+
   textContainer.classList.add(`text-alignment-${align}`);
   if (image === "grid") {
+    background.style.backgroundImage = "none";
     const imageURL = data["image-url"];
     const img = document.createElement("img");
     img.className = "image-container";
     img.src = imageURL;
     img.alt = "alt Tag";
-    const heroContent = document.querySelector(".hero-content");
     heroContent.appendChild(img);
     heroContent.classList.add("hero-grid");
     console.log(imageURL);
+    [...textContainer.classList].forEach((cls) => {
+      if (cls.startsWith("text-alignment")) {
+        textContainer.classList.remove(cls);
+      }
+    });
+
+    textContainer.classList.add("text-alignment-left");
   } else if (image === "background") {
+    [...heroContent.classList].forEach((cls) => {
+      if (cls === "hero-grid") {
+        heroContent.classList.remove(cls);
+      }
+    });
     const imageURL = data["image-url"];
-    const background = document.getElementById("hero-container");
+
     background.style.backgroundImage = `url(${imageURL})`;
-    const heroGrid = document.querySelector(".hero-grid");
-    heroGrid.style.gridTemplateColumns = "1fr";
+    heroContent.style.gridTemplateColumns = "1fr";
   } else if (image === "none") {
-    const heroContent = document.querySelector(".hero-content");
+    background.style.backgroundImage = "none";
+    [...heroContent.classList].forEach((cls) => {
+      if (cls === "hero-grid") {
+        heroContent.classList.remove(cls);
+      }
+    });
     heroContent.querySelector(".image-container")?.remove();
   }
   // hero document selectors
-  const heroContent = document.querySelector(".text-container");
-  heroContent.querySelector("h1").textContent = heading;
-  heroContent.querySelector("p").textContent = paragraph;
-  heroContent.querySelector(".hero-btn").textContent = buttonText;
-  heroContent.querySelector(".hero-btn").href = buttonLink;
+  textContainer.querySelector("h1").textContent = heading;
+  textContainer.querySelector("p").textContent = paragraph;
+  textContainer.querySelector(".hero-btn").textContent = buttonText;
+  textContainer.querySelector(".hero-btn").href = buttonLink;
 
   modal.style.display = "none";
   if (data.animation === "none") {
