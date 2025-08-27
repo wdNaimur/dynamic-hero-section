@@ -1,382 +1,363 @@
+// ======================
+// DOM ELEMENTS
+// ======================
 const openModalBtn = document.getElementById("openModalBtn");
-const modal = document.getElementById("settingsModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
+const modal = document.getElementById("settingsModal");
+const form = document.querySelector(".settings-form");
+
 const animation = document.getElementById("animation");
 const backgroundController = document.getElementById("background-controller");
 const heroContent = document.querySelector(".hero-content");
 const textContainer = document.querySelector(".text-container");
 const background = document.getElementById("hero-container");
+const gridBox = document.querySelector(".hero-hight");
 
-openModalBtn.addEventListener("click", () => {
-  modal.style.display = "flex";
-});
-
-closeModalBtn.addEventListener("click", () => {
-  modal.style.display = "none";
-});
-
-window.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
-});
-
-function removeAnimation() {
-  animation.classList.forEach((cls) => {
-    if (cls.startsWith("animation")) {
-      animation.classList.remove(cls);
-    }
-  });
-  animation.innerHTML = "";
-  animation.style = "";
-}
-// text container fix
-function resetTextContainer() {
-  // clear inline styles only if set
-  if (heroContent.hasAttribute("style")) {
-    heroContent.removeAttribute("style");
-  }
-
-  // remove any text alignment class (catch-all)
-  textContainer.classList.forEach((cls) => {
-    if (cls.startsWith("text-alignment-")) {
-      textContainer.classList.remove(cls);
-    }
-  });
-
-  // remove image if left over from grid option
-  const oldImg = heroContent.querySelector(".image-container");
-  if (oldImg) oldImg.remove();
-}
-// GET FORM VALUE
-
-const form = document.querySelector(".settings-form");
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  removeAnimation();
-  resetTextContainer();
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData);
-  const buttonText = data["button-text"];
-  const buttonLink = data["button-link"];
-  const heading = data["heading"];
-  const paragraph = data["paragraph"];
-  const align = data["align"];
-  const image = data["image"];
-
-  console.log(data);
-  // hero container selectors
-
-  textContainer.classList.add(`text-alignment-${align}`);
-  if (image === "grid") {
-    background.style.backgroundImage = "none";
-    const imageURL = data["image-url"];
-    const img = document.createElement("img");
-    img.className = "image-container";
-    img.src = imageURL;
-    img.alt = "alt Tag";
-    heroContent.appendChild(img);
-    heroContent.classList.add("hero-grid");
-    console.log(imageURL);
-    [...textContainer.classList].forEach((cls) => {
-      if (cls.startsWith("text-alignment")) {
-        textContainer.classList.remove(cls);
-      }
-    });
-
-    textContainer.classList.add("text-alignment-left");
-  } else if (image === "background") {
-    [...heroContent.classList].forEach((cls) => {
-      if (cls === "hero-grid") {
-        heroContent.classList.remove(cls);
-      }
-    });
-    const imageURL = data["image-url"];
-
-    background.style.backgroundImage = `url(${imageURL})`;
-    heroContent.style.gridTemplateColumns = "1fr";
-  } else if (image === "none") {
-    background.style.backgroundImage = "none";
-    [...heroContent.classList].forEach((cls) => {
-      if (cls === "hero-grid") {
-        heroContent.classList.remove(cls);
-      }
-    });
-    heroContent.querySelector(".image-container")?.remove();
-  }
-  // hero document selectors
-  textContainer.querySelector("h1").textContent = heading;
-  textContainer.querySelector("p").textContent = paragraph;
-  textContainer.querySelector(".hero-btn").textContent = buttonText;
-  textContainer.querySelector(".hero-btn").href = buttonLink;
-
-  modal.style.display = "none";
-  if (data.animation === "none") {
-    return removeAnimation();
-  } else if (data.animation === "aurora") {
-    removeAnimation();
-    animation.classList.add("animation-aurora");
-    const animationAurora = document.querySelector(".animation-aurora");
-    // Get user-selected options
-    const color1 = data["auroraColor1"];
-    const color2 = data["auroraColor2"];
-    const color3 = data["auroraColor3"];
-    const color4 = data["auroraColor4"];
-    const color5 = data["auroraColor5"];
-    const angle = data["auroraAngle"] ?? 100;
-    // fallback to 100deg if not provided
-    const loopDuration = data["loopDuration"] ?? 15;
-    console.log(loopDuration);
-
-    // Apply CSS variables dynamically
-    animationAurora.style.setProperty("--aurora-color1", color1);
-    animationAurora.style.setProperty("--aurora-color2", color2);
-    animationAurora.style.setProperty("--aurora-color3", color3);
-    animationAurora.style.setProperty("--aurora-color4", color4);
-    animationAurora.style.setProperty("--aurora-color5", color5);
-    animationAurora.style.setProperty("--aurora-angle", angle + "deg");
-    animationAurora.style.animationDuration = `${loopDuration}s`;
-  } else if (data.animation === "beam") {
-    removeAnimation();
-    console.log(data);
-    // get dynamic values (with defaults if empty)
-    const count = parseInt(data["beamCount"]) || 15;
-    const starColor = data["beamColorStar"];
-    const tailColor = data["beamColorTail"];
-    const width = parseInt(data["beamWidth"]) || 200;
-    const directionOfBeams = data["directionOfBeams"];
-    const gap = parseInt(data["beamGap"]) || 200;
-
-    for (let i = 0; i < count; i++) {
-      const beam = document.createElement("span");
-      beam.classList.add("beam");
-
-      // random delay: 0–10s
-      const delay = (Math.random() * 3).toFixed(2) + "s";
-      // random duration: 3.5–7s
-      const duration = (3.5 + Math.random() * 3.5).toFixed(2) + "s";
-
-      // apply CSS vars
-      beam.style.left = `${i * gap}px`;
-      beam.style.setProperty("--delay", delay);
-      beam.style.setProperty("--duration", duration);
-      beam.style.setProperty("--beam-width", `${width}px`);
-      beam.style.setProperty("--beam-color-tail", `${tailColor}`);
-      beam.style.setProperty("--beam-color-star", `${starColor}`);
-      console.log(tailColor, starColor);
-
-      animation.appendChild(beam);
-      beam.style.animation = `beam-animation-${directionOfBeams} ${duration} linear ${delay} infinite`;
-    }
-  } else if (data.animation === "borderGrid") {
-    removeAnimation();
-    const borderColor = String(data.borderColor);
-    let gridSize = parseInt(data.borderGridSize);
-    const gridMode = data.gridMode;
-    gridSize = gridMode === "3d" ? gridSize / 3.5 : gridSize;
-
-    animation.classList.add("animationBorderGrid");
-    const gridBox = document.querySelector(".hero-hight");
-    const boxSize = gridBox.getBoundingClientRect();
-    const containerHight = boxSize.height;
-    const containerWidth = boxSize.width;
-    const rowNumber = Math.ceil(containerHight / gridSize);
-    const columnNumber = Math.ceil(containerWidth / gridSize);
-    const numberOfBoxes = rowNumber * columnNumber;
-    const AnimationContainer = document.querySelector(".animationBorderGrid"); // animation container
-
-    AnimationContainer.style.gridTemplateColumns = `repeat(${columnNumber}, 1fr)`;
-    AnimationContainer.style.gridTemplateRows = `repeat(${rowNumber}, 1fr)`;
-    gridMode === "3d"
-      ? (AnimationContainer.style.transform =
-          "perspective(4000px) translate(-60%, -60%) skewX(30deg) skewY(-30deg) scale(4.2) rotateY(45deg) rotateX(45deg)")
-      : (AnimationContainer.style.transform = "translate(-50%, -50%)");
-
-    for (let i = 0; i < numberOfBoxes; i++) {
-      const box = document.createElement("div");
-      box.classList.add("gridbox");
-      animation.appendChild(box);
-    }
-    const boxes = document.querySelectorAll(".gridbox");
-
-    gridBox.addEventListener("mousemove", (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-
-      let hoveredIndex;
-
-      boxes.forEach((box, i) => {
-        const rect = box.getBoundingClientRect();
-
-        if (
-          x >= rect.left &&
-          x <= rect.right &&
-          y >= rect.top &&
-          y <= rect.bottom
-        ) {
-          hoveredIndex = i;
-        }
-      });
-
-      // reset all
-      boxes.forEach((box) => box.classList.remove("active"));
-
-      if (hoveredIndex >= 0) {
-        const currentBox = boxes[hoveredIndex];
-        currentBox.classList.add("active");
-        currentBox.style.borderColor = borderColor;
-
-        // Remove the class after 1 second
-        setTimeout(() => {
-          currentBox.classList.remove("active");
-          currentBox.style.borderColor = "";
-        }, 200);
-      }
-    });
-  } else if (data.animation === "beamGrid") {
-    removeAnimation();
-    const beamGrid = document.createElement("div");
-    beamGrid.classList.add("animationGridBeam");
-    animation.appendChild(beamGrid);
-    const count = parseInt(data["GridbeamCount"]) || 6;
-    const gap = parseInt(data["GridbeamGap"]) || 500;
-    const starColor = data["GridbeamColorStar"] || "#ff3333ff";
-    const tailColor = data["GridbeamColorTail"] || "#fff";
-    const width = parseInt(data["GridbeamWidth"]) || 200;
-
-    for (let i = 0; i < count; i++) {
-      const beam = document.createElement("span");
-      beam.classList.add("beam");
-
-      // random delay: 0–10s
-      const delay = (Math.random() * 3).toFixed(2) + "s";
-      // random duration: 3.5–7s
-      const duration = (3.5 + Math.random() * 3.5).toFixed(2) + "s";
-
-      // apply CSS vars
-      beam.style.left = `${i * gap}px`;
-      beam.style.setProperty("--delay", delay);
-      beam.style.setProperty("--duration", duration);
-      beam.style.setProperty("--beam-width", `${width}px`);
-      beam.style.setProperty("--beam-color-tail", `${tailColor}`);
-      beam.style.setProperty("--beam-color-star", `${starColor}`);
-
-      animation.appendChild(beam);
-      beam.style.animation = `beam-animation-left ${duration} linear ${delay} infinite`;
-    }
-  }
-});
-
-// beam animaiton customization
-// backgouond controller show/hide
 const radios = document.querySelectorAll('input[name="animation"]');
 const auroraOptions = document.getElementById("auroraOptions");
 const beamOptions = document.getElementById("beamOptions");
 const beamGridOptions = document.getElementById("beamGridOptions");
 const borderGridOptions = document.getElementById("borderGridOptions");
 
-radios.forEach((radio) => {
+const auroraColorInputs = auroraOptions.querySelectorAll('input[type="color"]');
+const beamColorInputs = beamOptions.querySelectorAll('input[type="color"]');
+const gridColorInputs = beamGridOptions.querySelectorAll('input[type="color"]');
+const borderColorInputs = borderGridOptions.querySelectorAll(
+  'input[type="color"]'
+);
+
+const imageRadios = document.querySelectorAll('input[name="image"]');
+const headingPositionBox = document.querySelector(".text-alignment-options");
+
+const backgroundColorPicker = document.getElementById(
+  "background-color-picker"
+);
+const imageInput = document.getElementById("image-url-container");
+
+// ======================
+// MODAL HANDLING
+// ======================
+openModalBtn.addEventListener("click", () => (modal.style.display = "flex"));
+closeModalBtn.addEventListener("click", () => (modal.style.display = "none"));
+window.addEventListener("click", (e) => {
+  if (e.target === modal) modal.style.display = "none";
+});
+
+// ======================
+// UTILITY FUNCTIONS
+// ======================
+function removeAnimation() {
+  animation.classList.forEach(
+    (cls) => cls.startsWith("animation") && animation.classList.remove(cls)
+  );
+  animation.innerHTML = "";
+  animation.style = "";
+}
+
+function resetTextContainer() {
+  // Remove inline styles
+  heroContent.hasAttribute("style") && heroContent.removeAttribute("style");
+
+  // Remove text alignment classes
+  [...textContainer.classList].forEach(
+    (cls) =>
+      cls.startsWith("text-alignment-") && textContainer.classList.remove(cls)
+  );
+
+  // Remove leftover image
+  const oldImg = heroContent.querySelector(".image-container");
+  oldImg && oldImg.remove();
+}
+
+function removeSpotlight() {
+  const spotlight = document.querySelector(".spotlight");
+  spotlight && spotlight.remove();
+}
+
+// ======================
+// FORM SUBMISSION
+// ======================
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  removeAnimation();
+  resetTextContainer();
+  removeSpotlight();
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  const buttonColor = data["button-color"] || "#EEEEEE";
+  const buttonTextColor = data["button-text-color"] || "#000000";
+  const headingColor = data["heading-color"] || "#EEEEEE";
+  const paragraphColor = data["paragraph-color"] || "#AAAAAA";
+
+  // ===== Hero Text Content =====
+  const h1 = textContainer.querySelector("h1");
+  const p = textContainer.querySelector("p");
+  const heroBtn = textContainer.querySelector(".hero-btn");
+
+  h1.textContent = data.heading || "Experience Stunning Animated Background";
+  h1.style.color = headingColor; // Apply heading color
+
+  p.textContent =
+    data.paragraph ||
+    "Discover beautiful, dynamic gradient animations that bring your website to life.";
+  p.style.color = paragraphColor; // Apply paragraph color
+
+  heroBtn.textContent = data["button-text"] || "Learn More";
+  heroBtn.href = data["button-link"] || "#";
+  heroBtn.style.backgroundColor = buttonColor; // Button background color
+  heroBtn.style.color = buttonTextColor; // Button text color
+
+  // ===== Text Alignment =====
+  const align = data.align;
+  textContainer.classList.add(`text-alignment-${align}`);
+
+  // ===== IMAGE HANDLING =====
+  const image = data.image;
+  if (image === "grid") {
+    background.style.backgroundImage = "none";
+    const img = document.createElement("img");
+    img.className = "image-container";
+    img.src = data["image-url"];
+    img.alt = "alt Tag";
+    heroContent.appendChild(img);
+    heroContent.classList.add("hero-grid");
+
+    // Reset alignment to left
+    [...textContainer.classList].forEach(
+      (cls) =>
+        cls.startsWith("text-alignment") && textContainer.classList.remove(cls)
+    );
+    textContainer.classList.add("text-alignment-left");
+    background.style.backgroundColor = "none";
+  } else if (image === "background") {
+    removeSpotlight();
+    heroContent.classList.remove("hero-grid");
+    background.style.backgroundImage = `url(${data["image-url"]})`;
+    heroContent.style.gridTemplateColumns = "1fr";
+    background.style.backgroundColor = "none";
+  } else if (image === "none") {
+    background.style.backgroundImage = "none";
+    heroContent.classList.remove("hero-grid");
+    heroContent.querySelector(".image-container")?.remove();
+    background.style.backgroundColor = data["bg-color"] || "#000000";
+  }
+
+  // ===== ANIMATION HANDLING =====
+  const animationType = data.animation || "none";
+
+  if (animationType === "none") {
+    removeAnimation();
+  }
+
+  if (animationType === "aurora") {
+    removeAnimation();
+    animation.classList.add("animation-aurora");
+    const animationAurora = document.querySelector(".animation-aurora");
+
+    [
+      "auroraColor1",
+      "auroraColor2",
+      "auroraColor3",
+      "auroraColor4",
+      "auroraColor5",
+    ].forEach((color, i) => {
+      animationAurora.style.setProperty(`--aurora-color${i + 1}`, data[color]);
+    });
+
+    animationAurora.style.setProperty(
+      "--aurora-angle",
+      (data.auroraAngle || 100) + "deg"
+    );
+    animationAurora.style.animationDuration = `${data.loopDuration || 15}s`;
+  }
+
+  if (animationType === "beam") {
+    removeAnimation();
+    const count = parseInt(data.beamCount) || 15;
+    const starColor = data.beamColorStar;
+    const tailColor = data.beamColorTail;
+    const width = parseInt(data.beamWidth) || 200;
+    const gap = parseInt(data.beamGap) || 200;
+    const direction = data.directionOfBeams;
+
+    for (let i = 0; i < count; i++) {
+      const beam = document.createElement("span");
+      beam.classList.add("beam");
+      beam.style.left = `${i * gap}px`;
+      beam.style.setProperty("--delay", (Math.random() * 3).toFixed(2) + "s");
+      beam.style.setProperty(
+        "--duration",
+        (3.5 + Math.random() * 3.5).toFixed(2) + "s"
+      );
+      beam.style.setProperty("--beam-width", `${width}px`);
+      beam.style.setProperty("--beam-color-tail", tailColor);
+      beam.style.setProperty("--beam-color-star", starColor);
+
+      animation.appendChild(beam);
+      beam.style.animation = `beam-animation-${direction} ${beam.style.getPropertyValue(
+        "--duration"
+      )} linear ${beam.style.getPropertyValue("--delay")} infinite`;
+    }
+  }
+
+  if (animationType === "borderGrid") {
+    removeAnimation();
+
+    const borderColor = String(data.borderColor);
+    let gridSize = parseInt(data.borderGridSize);
+    const gridMode = data.gridMode;
+    gridSize = gridMode === "3d" ? gridSize / 3.5 : gridSize;
+
+    animation.classList.add("animationBorderGrid");
+
+    const boxSize = gridBox.getBoundingClientRect();
+    const rowNumber = Math.ceil(boxSize.height / gridSize);
+    const columnNumber = Math.ceil(boxSize.width / gridSize);
+    const numberOfBoxes = rowNumber * columnNumber;
+
+    const AnimationContainer = document.querySelector(".animationBorderGrid");
+    AnimationContainer.style.gridTemplateColumns = `repeat(${columnNumber}, 1fr)`;
+    AnimationContainer.style.gridTemplateRows = `repeat(${rowNumber}, 1fr)`;
+    AnimationContainer.style.transform =
+      gridMode === "3d"
+        ? "perspective(4000px) translate(-60%, -60%) skewX(30deg) skewY(-30deg) scale(4.2) rotateY(45deg) rotateX(45deg)"
+        : "translate(-50%, -50%)";
+
+    for (let i = 0; i < numberOfBoxes; i++) {
+      const box = document.createElement("div");
+      box.classList.add("gridbox");
+      animation.appendChild(box);
+    }
+
+    const boxes = document.querySelectorAll(".gridbox");
+    const spotlight = document.createElement("div");
+    spotlight.classList.add("spotlight");
+    // dont add if it is background image
+    if (image !== "background" && image !== "none") {
+      gridBox.appendChild(spotlight);
+    } else {
+      spotlight.style.display = "none";
+    }
+    // gridBox.appendChild(spotlight);
+
+    gridBox.addEventListener("mousemove", (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      spotlight.style.setProperty("--x", `${x}px`);
+      spotlight.style.setProperty("--y", `${y}px`);
+
+      let hoveredIndex;
+      boxes.forEach((box, i) => {
+        const rect = box.getBoundingClientRect();
+        if (
+          x >= rect.left &&
+          x <= rect.right &&
+          y >= rect.top &&
+          y <= rect.bottom
+        )
+          hoveredIndex = i;
+      });
+
+      boxes.forEach((box) => box.classList.remove("active"));
+
+      if (hoveredIndex >= 0) {
+        const currentBox = boxes[hoveredIndex];
+        currentBox.classList.add("active");
+        currentBox.style.borderColor = borderColor;
+        setTimeout(() => {
+          currentBox.classList.remove("active");
+          currentBox.style.borderColor = "";
+        }, 200);
+      }
+    });
+  }
+
+  if (animationType === "beamGrid") {
+    removeAnimation();
+
+    const beamGrid = document.createElement("div");
+    beamGrid.classList.add("animationGridBeam");
+    animation.appendChild(beamGrid);
+
+    const count = parseInt(data.GridbeamCount) || 6;
+    const gap = parseInt(data.GridbeamGap) || 500;
+    const starColor = data.GridbeamColorStar || "#ff3333ff";
+    const tailColor = data.GridbeamColorTail || "#fff";
+    const width = parseInt(data.GridbeamWidth) || 200;
+
+    for (let i = 0; i < count; i++) {
+      const beam = document.createElement("span");
+      beam.classList.add("beam");
+      beam.style.left = `${i * gap}px`;
+      beam.style.setProperty("--delay", (Math.random() * 3).toFixed(2) + "s");
+      beam.style.setProperty(
+        "--duration",
+        (3.5 + Math.random() * 3.5).toFixed(2) + "s"
+      );
+      beam.style.setProperty("--beam-width", `${width}px`);
+      beam.style.setProperty("--beam-color-tail", tailColor);
+      beam.style.setProperty("--beam-color-star", starColor);
+
+      animation.appendChild(beam);
+      beam.style.animation = `beam-animation-left ${beam.style.getPropertyValue(
+        "--duration"
+      )} linear ${beam.style.getPropertyValue("--delay")} infinite`;
+    }
+  }
+
+  modal.style.display = "none";
+});
+
+// ======================
+// RADIO CHANGE HANDLING
+// ======================
+radios.forEach((radio) =>
   radio.addEventListener("change", (e) => {
     const value = e.target.value;
-
-    // Hide all options initially
     auroraOptions.style.display = "none";
     beamOptions.style.display = "none";
     beamGridOptions.style.display = "none";
     borderGridOptions.style.display = "none";
 
-    // Show options based on selection
     if (value === "aurora") auroraOptions.style.display = "block";
     if (value === "beam") beamOptions.style.display = "block";
     if (value === "beamGrid") beamGridOptions.style.display = "block";
     if (value === "borderGrid") borderGridOptions.style.display = "block";
-  });
-});
-
-//aurora color options
-const auroraColorOptions = document.getElementById("auroraOptions");
-
-// Select all color inputs inside auroraOptions
-const colorInputs = auroraColorOptions.querySelectorAll('input[type="color"]');
-
-colorInputs.forEach((input) => {
-  const span = input.nextElementSibling; // the span next to the input
-  span.textContent = input.value; // initialize with default value
-
-  // Update span dynamically on input
-  input.addEventListener("input", () => {
-    span.textContent = input.value;
-  });
-});
-
-//beam color options
-const beamColorOptions = document.getElementById("beamOptions");
-
-// Select all color inputs inside beamOptions
-const beamColorInputs = beamColorOptions.querySelectorAll(
-  'input[type="color"]'
+  })
 );
 
-beamColorInputs.forEach((input) => {
-  const span = input.nextElementSibling; // the span next to the input
-  span.textContent = input.value; // initialize with default value
-
-  // Update span dynamically on input
-  input.addEventListener("input", () => {
+// ======================
+// COLOR INPUT DISPLAY
+// ======================
+function setupColorInputs(inputs) {
+  inputs.forEach((input) => {
+    const span = input.nextElementSibling;
     span.textContent = input.value;
+    input.addEventListener("input", () => (span.textContent = input.value));
   });
-});
+}
 
-// beam grid color show
-const beamGridColorOptions = document.getElementById("beamGridOptions");
+setupColorInputs(auroraColorInputs);
+setupColorInputs(beamColorInputs);
+setupColorInputs(gridColorInputs);
+setupColorInputs(borderColorInputs);
 
-// select all color inputs in BeamGrid section
-const gridColorInputs = beamGridColorOptions.querySelectorAll(
-  'input[type="color"]'
-);
-
-gridColorInputs.forEach((input) => {
-  const span = input.nextElementSibling; // the span next to input
-  span.textContent = input.value; // initialize with default color
-
-  // update span dynamically on input
-  input.addEventListener("input", () => {
-    span.textContent = input.value;
-  });
-});
-
-// border grid color show
-const borderGridColorOptions = document.getElementById("borderGridOptions");
-
-// select all color inputs in BorderGrid section
-const borderColorInputs = borderGridColorOptions.querySelectorAll(
-  'input[type="color"]'
-);
-
-borderColorInputs.forEach((input) => {
-  const span = input.nextElementSibling; // the span next to input
-  span.textContent = input.value; // initialize with default color
-
-  // update span dynamically on input
-  input.addEventListener("input", () => {
-    span.textContent = input.value;
-  });
-});
-
-// Select all image option radios
-const imageRadios = document.querySelectorAll('input[name="image"]');
-const headingPositionBox = document.querySelector(".text-alignment-options");
-
-// Watch for changes
-imageRadios.forEach((radio) => {
+// ======================
+// IMAGE RADIO CHANGE HANDLING
+// ======================
+imageRadios.forEach((radio) =>
   radio.addEventListener("change", (e) => {
-    const value = e.target.value;
-
-    if (value === "grid") {
-      headingPositionBox.style.display = "none";
+    headingPositionBox.style.display =
+      e.target.value === "grid" ? "none" : "block";
+    if (radio.value === "none") {
+      backgroundColorPicker.style.display = "block";
+      imageInput.style.display = "none";
     } else {
-      headingPositionBox.style.display = "block";
+      backgroundColorPicker.style.display = "none";
+      imageInput.style.display = "block";
     }
-  });
-});
+  })
+);
