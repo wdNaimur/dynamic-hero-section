@@ -129,7 +129,6 @@ form.addEventListener("submit", (e) => {
 
   if (animationType === "none") {
     removeAnimation();
-    return;
   }
 
   if (animationType === "aurora") {
