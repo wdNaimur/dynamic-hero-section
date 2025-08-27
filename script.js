@@ -81,16 +81,29 @@ form.addEventListener("submit", (e) => {
 
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
+  console.log(data);
+  const buttonColor = data["button-color"] || "#EEEEEE";
+  const buttonTextColor = data["button-text-color"] || "#000000";
+  const headingColor = data["heading-color"] || "#EEEEEE";
+  const paragraphColor = data["paragraph-color"] || "#AAAAAA";
 
   // ===== Hero Text Content =====
-  textContainer.querySelector("h1").textContent =
-    data.heading || "Experience Stunning Animated Background";
-  textContainer.querySelector("p").textContent =
+  const h1 = textContainer.querySelector("h1");
+  const p = textContainer.querySelector("p");
+  const heroBtn = textContainer.querySelector(".hero-btn");
+
+  h1.textContent = data.heading || "Experience Stunning Animated Background";
+  h1.style.color = headingColor; // Apply heading color
+
+  p.textContent =
     data.paragraph ||
     "Discover beautiful, dynamic gradient animations that bring your website to life.";
-  textContainer.querySelector(".hero-btn").textContent =
-    data["button-text"] || "Learn More";
-  textContainer.querySelector(".hero-btn").href = data["button-link"] || "#";
+  p.style.color = paragraphColor; // Apply paragraph color
+
+  heroBtn.textContent = data["button-text"] || "Learn More";
+  heroBtn.href = data["button-link"] || "#";
+  heroBtn.style.backgroundColor = buttonColor; // Button background color
+  heroBtn.style.color = buttonTextColor; // Button text color
 
   // ===== Text Alignment =====
   const align = data.align;
