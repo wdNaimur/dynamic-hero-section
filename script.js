@@ -236,7 +236,7 @@ form.addEventListener("submit", (e) => {
     const spotlight = document.createElement("div");
     spotlight.classList.add("spotlight");
     // dont add if it is background image
-    if (image !== "background") {
+    if (image !== "background" && image !== "none") {
       gridBox.appendChild(spotlight);
     } else {
       spotlight.style.display = "none";
