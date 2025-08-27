@@ -126,7 +126,6 @@
               />
               <span class="color-value"></span>
             </div>
-
             <div>
               <h4>Add Image:</h4>
 
@@ -156,11 +155,25 @@
                 <label for="image-grid">Image Grid</label>
               </div>
 
-              <input
-                type="url"
-                name="image-url"
-                placeholder="Enter image URL"
-              />
+              <!-- Color Picker -->
+              <div id="background-color-picker" class="color-picker">
+                <label for="bg-color">Choose background color:</label>
+                <input
+                  type="color"
+                  id="bg-color"
+                  name="bg-color"
+                  value="#ffffff"
+                />
+              </div>
+
+              <!-- Image URL Input -->
+              <div id="image-url-container" style="display: none">
+                <input
+                  type="url"
+                  name="image-url"
+                  placeholder="Enter image URL"
+                />
+              </div>
             </div>
 
             <div class="text-alignment-options">
