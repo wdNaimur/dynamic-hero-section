@@ -29,6 +29,11 @@ const borderColorInputs = borderGridOptions.querySelectorAll(
 const imageRadios = document.querySelectorAll('input[name="image"]');
 const headingPositionBox = document.querySelector(".text-alignment-options");
 
+const backgroundColorPicker = document.getElementById(
+  "background-color-picker"
+);
+const imageInput = document.getElementById("image-url-container");
+
 // ======================
 // MODAL HANDLING
 // ======================
@@ -126,15 +131,18 @@ form.addEventListener("submit", (e) => {
         cls.startsWith("text-alignment") && textContainer.classList.remove(cls)
     );
     textContainer.classList.add("text-alignment-left");
+    background.style.backgroundColor = "none";
   } else if (image === "background") {
     removeSpotlight();
     heroContent.classList.remove("hero-grid");
     background.style.backgroundImage = `url(${data["image-url"]})`;
     heroContent.style.gridTemplateColumns = "1fr";
+    background.style.backgroundColor = "none";
   } else if (image === "none") {
     background.style.backgroundImage = "none";
     heroContent.classList.remove("hero-grid");
     heroContent.querySelector(".image-container")?.remove();
+    background.style.backgroundColor = data["bg-color"] || "#000000";
   }
 
   // ===== ANIMATION HANDLING =====
@@ -344,5 +352,12 @@ imageRadios.forEach((radio) =>
   radio.addEventListener("change", (e) => {
     headingPositionBox.style.display =
       e.target.value === "grid" ? "none" : "block";
+    if (radio.value === "none") {
+      backgroundColorPicker.style.display = "block";
+      imageInput.style.display = "none";
+    } else {
+      backgroundColorPicker.style.display = "none";
+      imageInput.style.display = "block";
+    }
   })
 );
